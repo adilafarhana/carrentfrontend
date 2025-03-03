@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Nav = () => {
+const NavHome= () => {
   const navbarStyle = {
     backgroundColor: "#333",
     padding: "10px 20px",
@@ -51,22 +51,23 @@ const Nav = () => {
       <ul style={ulStyle}>
         <li style={liStyle}>
           <Link
-            to="/signin"
+            to="/rendcardashboard"
+            style={linkStyle}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+          >
+             Used Car
+            
+          </Link>
+        </li>
+        <li style={liStyle}>
+          <Link
+            to="/usedcardashboard"
             style={linkStyle}
             onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
           >
             Rent Car
-          </Link>
-        </li>
-        <li style={liStyle}>
-          <Link
-            to="/signin"
-            style={linkStyle}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-          >
-            Used Car
           </Link>
           <Link
             to="/signin"
@@ -93,10 +94,11 @@ const Nav = () => {
            blogs
           </Link>
           
+          
         </li>
       </ul>
     </nav>
   );
 };
 
-export default Nav;
+export default NavHome;

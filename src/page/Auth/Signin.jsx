@@ -18,22 +18,24 @@ const Signin = () => {
       return;
     }
 
-    if (data.email === "admin@gmail.com" && data.password === "admin") {
-      sessionStorage.setItem("token", "admin-token");
-      sessionStorage.setItem("userid", "admin-id");
-      alert("Admin logged in successfully");
-      navigate("/admin");
-      return;
-    }
-
     try {
       const response = await axios.post("http://localhost:3030/login", data);
       if (response.data.status === "Success") {
-        sessionStorage.setItem("token", response.data.token);
-        sessionStorage.setItem("userid", response.data.userid);
+        console.log(response)
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("useremail", data.email);
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("isAdmin",response?.data?.isAdmin || false);
+        
         alert("LOGGED IN");
-        navigate("/rendcardashboard");
+       if(response.data?.isAdmin == true )
+        { 
+          return navigate("/admin")
+        }
+        else{         
+          navigate("/maindashboard");
+        }
       } else {
         setErrorMessage(response.data.message || "Login failed. Please check your credentials.");
       }

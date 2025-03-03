@@ -1,6 +1,5 @@
 import React from "react";
-import Nav from "./Nav";
-
+import NavHome from "../Nav/NavHome";
 const carImages = [
   "https://imgd.aeplcdn.com/300x225/vimages/202502/3826557_150913_1_1738847942911.jpg?q=80", 
   "https://imgd.aeplcdn.com/300x225/vimages/202501/3813234_150913_1_1738163524911.jpg?q=80", 
@@ -25,10 +24,10 @@ const blogs = [
   }
 ];
 
-const Dashboard = () => {
+const Maindashboard = () => {
   return (
     <>
-      <Nav />
+      <NavHome />
 
       {/* Internal CSS */}
       <style>
@@ -73,14 +72,13 @@ const Dashboard = () => {
         <h1>Welcome to Our Car Marketplace</h1>
         <p>Your one-stop platform for hassle-free car rentals, used car sales, and more!</p>
       </header>
-
       {/* Carousel Section */}
       <div id="carouselExample" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
           {[1, 2, 3].map((num, index) => (
             <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={index}>
               <img
-                src="https://cdn.wallpapersafari.com/11/41/0Xo4mS.jpg"
+                src="https://www.progressivetourtravels.com/images/car-banner.jpg"
                 className="d-block w-100"
                 alt={`Car ${num}`}
               />
@@ -172,4 +170,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Maindashboard;

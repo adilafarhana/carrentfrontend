@@ -2,23 +2,30 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { BrowserRouter, Routes ,Route} from 'react-router-dom'
-import Signin from './page/Signin'
-import Signup from './page/Signup'
-import Home from './page/Home'
-import Buycars from './page/Buycar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Cardetails from './page/Cardetails'
-import Sellcar from './page/Sellcar'
-import Dashboard from './page/Dashboard'
-import Admincarupload from './page/Admincarupload'
-import Rendcardashboard from './page/Rendcardashboard'
-import Userrentblogs from './page/Userrentblogs'
-import Blogdetails from './page/blogs/Blogdetails'
-import Admincardetails from './page/Admincardetails'
-import Cars from './page/Cars'
-import Viewrentblog from './page/Viewrentblogs'
-import Admindashboard from './page/Admindashboard'
-// import SearchCars from './page/SearchCars'
+// import Blogdetails from './page/blogs/Blogdetails'
+import Signin from './page/Auth/Signin'
+import Signup from './page/Auth/Signup'
+import Admincarupload from './page/uploadrentcars/Admincarupload'
+import Rendcardashboard from './page/Dashboards/Rendcardashboard'
+// import Userrentblogs from './page/blogs/Userrentblogs'
+import Admindashboard from './page/uploadrentcars/Admindashboard'
+import Admincardetails from './page/uploadrentcars/Admincardetails'
+import Dashboard from './page/Dashboards/Dashboard'
+import AdminRoute from './utils/AdminRoute'
+import UserRoute from './utils/UserRoute'
+import UserDetails from './page/Auth/Userdetails'
+import Viewusers from './page/Auth/Viewusers'
+import BlogUpload from './page/blogs/BlogUpload'
+import BlogList from './page/blogs/BlogList'
+import Usedcardashboard from './page/Usedcar.jsx/Usedcardashboard'
+import Maindashboard from './page/Dashboards/Maindashboard'
+import Bookingconfirmation from './page/Bookingconfirmation'
+import Adminbookingdetails from './page/Adminbookingdetails'
+import Carreviews from './page/rentcaruser/Carreviews'
+import Usedcarbooking from './page/Usedcar.jsx/Usedcarbooking'
+import Orderstatus from './page/Orderstatus'
 
 
 function App() {
@@ -28,21 +35,35 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+
+          <Route element={<AdminRoute />}>
+            <Route path="/car-details/:id" element={<Cardetails />} />
+            <Route path="/admincardetails" element={<Admincardetails />} />
+            <Route path="/admin" element={<Admindashboard />} />
+            <Route path="/uploadcar" element={<Admincarupload />} />
+          </Route>
+
+          <Route element={<UserRoute />}>
+            <Route path="/rendcardashboard" element={<Rendcardashboard />} />
+          </Route>
+
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/buycars" element={<Buycars />} />
-          <Route path="/cardetails" element={<Cardetails />} />
-          <Route path="/sellcar" element={<Sellcar />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/uploadcar" element={<Admincarupload />} />
-          <Route path="/rendcardashboard" element={<Rendcardashboard />} />
-          <Route path="/Userrentblogs" element={<Userrentblogs />} />
-          <Route path="/blogdetails" element={<Blogdetails />} />
-          <Route path="/admincardetails" element={<Admincardetails />} />
-          <Route path="/viewrentblog" element={<Viewrentblog />} />
-          <Route path="/car" element={<Cars />} />
-          <Route path="/admin" element={<Admindashboard />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/userdetails" element={<UserDetails />} />
+          <Route path="/viewusers" element={<Viewusers />} />
+          <Route path="/blogupload" element={<BlogUpload />} />
+          <Route path="/bloglist" element={<BlogList />} />
+          <Route path="/usedcardashboard" element={<Usedcardashboard />} />
+          <Route path="/maindashboard" element={<Maindashboard/>} />
+          <Route path="/booking-confirmation/:id" element={<Bookingconfirmation/>} />
+          <Route path="/Adminbookingdetails" element={<Adminbookingdetails/>} />
+          <Route path="/Usedcarbooking" element={<Usedcarbooking/>} />
+          <Route path="/reviews/:id" element={<Carreviews/>} />
+          <Route path="/Orderstatus" element={<Orderstatus/>} />
+
+          {/* <Route path="/blogdetails" element={<Blgdetails />} /> */}
+          {/* <Route path="/viewrentblog" element={<Viewrentblog />} /> */}
           {/* <Route path="/searchcars" element={<SearchCars />} /> */}
         </Routes>
       </BrowserRouter>

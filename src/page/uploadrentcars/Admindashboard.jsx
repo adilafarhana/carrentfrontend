@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Navadmindashboard from '../Nav/Navadmindashboard';
 
 const Admindashboard = () => {
   return (
@@ -17,6 +18,7 @@ const Admindashboard = () => {
         backgroundAttachment: 'fixed',
       }}
     >
+      <Navadmindashboard/>
       <div 
         style={{ 
           backgroundColor: 'rgba(255, 255, 255, 0.8)', 
@@ -88,6 +90,39 @@ const Admindashboard = () => {
               >
                 ADD USED CARS
               </button>
+            </Link>
+            <Link to="/bloglist">
+              <button 
+                style={{ 
+                  margin: '10px', 
+                  padding: '10px 20px', 
+                  fontSize: '16px', 
+                  backgroundColor: '#2196F3', 
+                  color: 'white', 
+                  border: 'none', 
+                  borderRadius: '5px', 
+                  cursor: 'pointer',
+                  transition: '0.3s',
+                }}
+              >
+                USER BLOGS
+              </button>
+            </Link>
+            <Link to="/Adminbookingdetails">
+              <button 
+                style={{ 
+                  margin: '10px', 
+                  padding: '10px 20px', 
+                  fontSize: '16px', 
+                  backgroundColor: '#2196F3', 
+                  color: 'white', 
+                  border: 'none', 
+                  borderRadius: '5px', 
+                  cursor: 'pointer',
+                  transition: '0.3s',
+                }}
+              >
+AdminBookingDetails              </button>
             </Link>
           </div>
         </div>

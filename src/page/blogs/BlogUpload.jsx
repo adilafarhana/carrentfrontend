@@ -1,31 +1,35 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Navrent from "../Nav/Navrent";
 
-const Admincarupload = () => {
+
+const BlogUpload = () => {
   const [formData, setFormData] = useState({
-    brand: "",
-    model: "",
-    price: "",
-    description: "",
-    type: "",
-    images: [],
+    title: "",
+    content: "",
+    image: [],
+ 
   });
   const [imagePreviews, setImagePreviews] = useState([]);
-  const [carId, setCarId] = useState(null);
-  const [cars, setCars] = useState([]);
+  const [Blogs, setBlogs] = useState([]);
   const navigate = useNavigate();
 
+
+  const requestHeader =  { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+
+  const fetchBlogs = async () => {
+    try {
+      const response = await axios.get("http://localhost:3030/getblogs",requestHeader);
+      const data = await response.data
+      setBlogs(data);
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const response = await fetch("http://localhost:3030/getcars");
-        const data = await response.json();
-        setCars(data);
-      } catch (error) {
-        console.error("Error fetching cars:", error);
-      }
-    };
-    fetchCars();
+    fetchBlogs();
   }, []);
 
   const handleChange = (e) => {
@@ -42,7 +46,7 @@ const Admincarupload = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.brand || !formData.model || !formData.price || !formData.description || !formData.type || formData.images.length === 0) {
+    if (!formData.title || !formData.content  || formData.images.length === 0) {
       alert("Please fill in all fields and upload images.");
       return;
     }
@@ -57,97 +61,53 @@ const Admincarupload = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:3030/uploadcar", {
-        method: "POST",
-        body: formDataToSend,
-      });
+      const response = await axios.post("http://localhost:3030/uploadblog", formDataToSend,requestHeader);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to upload car");
-      }
+      alert(response?.data?.message || "blog uploaded successfully!");
 
-      const data = await response.json();
-      setCarId(data._id);
-      alert("Car uploaded successfully!");
-
-      const updatedCars = await fetch("http://localhost:3030/getcars").then((res) => res.json());
-      setCars(updatedCars);
+      fetchBlogs()
 
     } catch (error) {
-      console.error("Error saving car details:", error);
-      alert(`Error uploading car details: ${error.message}`);
+      console.error("Error saving blog details:", error);
+      alert(`Error uploading blog details: ${error.message}`);
     }
   };
 
-  const handleDelete = async (carId) => {
+  const handleDelete = async (blogId) => {
     try {
-      const response = await fetch(`http://localhost:3030/deletecar/${carId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to delete car");
-      }
-
-      alert("Car deleted successfully!");
-      const updatedCars = await fetch("http://localhost:3030/getcars").then((res) => res.json());
-      setCars(updatedCars);
-
+      const response = await axios.delete(`http://localhost:3030/deleteblog/${blogId}`, requestHeader);
+      alert(response.data.message || "Blog deleted successfully!");
+  
+      setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== blogId));
     } catch (error) {
-      console.error("Error deleting car:", error);
-      alert(`Error deleting car: ${error.message}`);
+      console.error("Error deleting blog:", error.message);
+      alert(`Error deleting blog: ${error.response?.data?.message || error.message}`);
     }
   };
+  
 
   return (
     <div className="container">
-      <h2>Upload Car Details</h2>
+      <Navrent/>
+      <h2>Upload blog Details</h2>
       <form onSubmit={handleSubmit} className="form-container">
         <input
           type="text"
-          name="brand"
-          placeholder="Brand"
+          name="title"
+          placeholder="blog title"
           onChange={handleChange}
-          value={formData.brand}
+          value={formData.title}
           required
         />
         <input
           type="text"
-          name="model"
-          placeholder="Model"
+          name="content"
+          placeholder="content"
           onChange={handleChange}
-          value={formData.model}
+          value={formData.content}
           required
         />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          onChange={handleChange}
-          value={formData.price}
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          onChange={handleChange}
-          value={formData.description}
-          required
-        />
-        <select
-          name="type"
-          onChange={handleChange}
-          value={formData.type}
-          required
-        >
-          <option value="">Select Type</option>
-          <option value="SUV">SUV</option>
-          <option value="Sedan">Sedan</option>
-          <option value="Hatchback">Hatchback</option>
-          <option value="Convertible">Convertible</option>
-        </select>
+        
         <input
           type="file"
           name="images"
@@ -163,36 +123,35 @@ const Admincarupload = () => {
             ))}
           </div>
         )}
-        <button type="submit">Upload Car</button>
+        <button type="submit">Upload blog</button>
       </form>
 
-      <h3>Uploaded Cars</h3>
+      <h3>Uploaded blog</h3>
       <table className="car-table">
         <thead>
           <tr>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Price</th>
-            <th>Actions</th>
+            <th>title</th>
+            <th>content</th>
+       
           </tr>
         </thead>
         <tbody>
-          {cars.length > 0 ? (
-            cars.map((car) => (
-              <tr key={car._id}>
-                <td>{car.brand}</td>
-                <td>{car.model}</td>
-                <td>{car.price} USD</td>
+          {Blogs.length > 0 ? (
+            Blogs.map((Blog) => (
+              <tr key={Blog._id}>
+                <td>{Blog.title}</td>
+                <td>{Blog.content}</td>
                 <td>
-                  <button onClick={() => handleDelete(car._id)} className="btn btn-danger">
+                  <button onClick={() => handleDelete(Blog._id)} className="btn btn-danger">
                     Delete
                   </button>
+
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="4">No cars uploaded yet.</td>
+              <td colSpan="4">No Blogs uploaded yet.</td>
             </tr>
           )}
         </tbody>
@@ -310,4 +269,4 @@ const Admincarupload = () => {
   );
 };
 
-export default Admincarupload;
+export default BlogUpload;

@@ -22,12 +22,12 @@ const Signup = () => {
     };
 
     const readValue = (data) => {
-        if (!data.name || !data.email || !data.phone || !data.gender || !data.password || !data.cpassword) {
+        if (!data.name || !data.email || !data.phone || !data.gender || !data.password || !data.confirmpassword) {
             alert("All fields are required!");
             return;
         }
 
-        if (data.password !== data.cpassword) {
+        if (data.password !== data.confirmpassword) {
             alert("Passwords do not match");
             return;
         }
@@ -37,7 +37,7 @@ const Signup = () => {
             .then((response) => {
                 if (response.data.status === "SIGNUP") {
                     alert("Registration successful");
-                    navigate("/login"); // Redirect to login after successful signup
+                    navigate("/signin"); // Redirect to login after successful signup
                 } else {
                     alert("Registration failed");
                 }
@@ -148,7 +148,7 @@ const Signup = () => {
                             <input
                                 type="password"
                                 className="form-control"
-                                {...register("cpassword", {
+                                {...register("confirmpassword", {
                                     required: "Confirm password is required",
                                     minLength: { value: 3, message: "Min 5 characters" },
                                     validate: (value) =>
@@ -156,7 +156,7 @@ const Signup = () => {
                                 })}
                                 placeholder="Confirm your password"
                             />
-                            {errors?.cpassword?.message && <span>{errors?.cpassword?.message}</span>}
+                            {errors?.confirmpassword?.message && <span>{errors?.confirmpassword?.message}</span>}
                         </div>
                         <div className="col-12 d-flex justify-content-center">
                             <button className="btn btn-primary" type="submit">REGISTER</button>

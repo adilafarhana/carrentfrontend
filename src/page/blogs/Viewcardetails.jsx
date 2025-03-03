@@ -21,7 +21,6 @@ const CarCard = ({ car }) => {
   );
 };
 
-// Admincarupload Component: Form to Upload Car Details
 const Admincarupload = () => {
   const [formData, setFormData] = useState({
     brand: "",
