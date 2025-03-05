@@ -9,7 +9,10 @@ const AdminCarUpload = () => {
     rentalPricePerHour: "",
     description: "",
     type: "",
+    specialOffers: "",
+    discountPercentage: "",
     images: [],
+
   });
 
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -42,39 +45,7 @@ const AdminCarUpload = () => {
     setFormData((prevData) => ({ ...prevData, images: files }));
     setImagePreviews(files.map((file) => URL.createObjectURL(file)));
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!formData.brand || !formData.model || !formData.price || !formData.description || !formData.type || formData.images.length === 0) {
-      alert("Please fill in all fields and upload images.");
-      return;
-    }
-
-    if (formData.type === "Rent" && !formData.rentalPricePerHour) {
-      alert("Please specify the rental price per hour.");
-      return;
-    }
-
-    const formDataToSend = new FormData();
-    Object.keys(formData).forEach((key) => {
-      if (key === "images") {
-        formData.images.forEach((image) => formDataToSend.append("images", image));
-      } else {
-        formDataToSend.append(key, formData[key]);
-      }
-    });
-
-    try {
-      const response = await axios.post("http://localhost:3030/uploadcar", formDataToSend, requestHeader);
-      alert(response?.data?.message || "Car uploaded successfully!");
-      fetchCars();
-    } catch (error) {
-      console.error("Error saving car details:", error);
-      alert(`Error uploading car details: ${error.message}`);
-    }
-  };
-
+  
   const handleDelete = async (carId) => {
     try {
       await axios.delete(`http://localhost:3030/deletecar/${carId}`, requestHeader);
@@ -85,6 +56,52 @@ const AdminCarUpload = () => {
       alert(`Error deleting car: ${error.message}`);
     }
   };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!formData.brand || !formData.model || !formData.price || !formData.description || !formData.type || formData.images.length === 0) {
+      alert("Please fill in all fields and upload images.");
+      return;
+    }
+  
+    if (formData.type === "Rent" && !formData.rentalPricePerHour) {
+      alert("Please specify the rental price per hour.");
+      return;
+    }
+  
+    let finalPrice = parseFloat(formData.price);
+  
+    if (formData.type === "Used" && formData.discountPercentage) {
+      const discountAmount = (finalPrice * parseFloat(formData.discountPercentage)) / 100;
+      finalPrice = finalPrice - discountAmount;
+    }
+  
+    const formDataToSend = new FormData();
+    formDataToSend.append("brand", formData.brand);
+    formDataToSend.append("model", formData.model);
+    formDataToSend.append("price", finalPrice);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("type", formData.type);
+    formDataToSend.append("specialOffers", formData.specialOffers);
+    formDataToSend.append("discountPercentage", formData.discountPercentage || 0);
+  
+    if (formData.type === "Rent") {
+      formDataToSend.append("rentalPricePerHour", formData.rentalPricePerHour);
+    }
+  
+    formData.images.forEach((image) => formDataToSend.append("images", image));
+  
+    try {
+      const response = await axios.post("http://localhost:3030/uploadcar", formDataToSend, requestHeader);
+      alert(response?.data?.message || "Car uploaded successfully!");
+      fetchCars();
+    } catch (error) {
+      console.error("Error saving car details:", error);
+      alert(`Error uploading car details: ${error.message}`);
+    }
+  };
+  
 
   return (
     <div className="container">
@@ -126,6 +143,8 @@ const AdminCarUpload = () => {
               <td><label>Description:</label></td>
               <td><textarea name="description" onChange={handleChange} value={formData.description} required /></td>
             </tr>
+            <input type="number" name="discountPercentage" placeholder="Discount %" onChange={handleChange} />
+      <input type="text" name="specialOffers" placeholder="Special Offer (if any)" onChange={handleChange} />
             <tr>
               <td><label>Upload Images:</label></td>
               <td><input type="file" name="images" multiple accept="image/*" onChange={handleFileChange} required /></td>

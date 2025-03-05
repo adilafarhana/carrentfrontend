@@ -57,8 +57,7 @@ const Maindashboard = () => {
           }
 
           .bg-primary {
-            background-color: #007bff;
-          }
+ background-color: #0056b3 !important;          }
 
           .btn-primary {
             background-color: #007bff;

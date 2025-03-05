@@ -96,6 +96,14 @@ const Usedcardashboard = () => {
                     <p>
                       <strong>Price per Hour:</strong> ₹{car.rentalPricePerHour}
                     </p>
+                    <button>
+                 
+  <Link to={`/car-reviews/${car._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+    View Review
+  </Link>
+</button>
+
+
                   </div>
                 </div>
               </div>

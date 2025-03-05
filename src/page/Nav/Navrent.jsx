@@ -112,12 +112,12 @@ bloglist          </Link>
             Orderstatus
           </Link>
 <Link
-            to="/usedcardashboard"
+            to="/car-reviews"
             style={linkStyle}
             onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
           >
-usedcar        </Link>
+ViewReview        </Link>
 
       {/* Logout Button */}
       {localStorage.getItem("token") && (

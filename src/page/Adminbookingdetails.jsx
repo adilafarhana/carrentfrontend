@@ -91,7 +91,9 @@ const Adminbookingdetails = () => {
                   >
                     <option value="Pending">Pending</option>
                     <option value="Confirmed">Confirmed</option>
+                    <option value="Delivered">Delivered</option>
                     <option value="Cancelled">Cancelled</option>
+
                   </select>
                 </td>
                 <td>

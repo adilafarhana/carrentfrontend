@@ -57,6 +57,14 @@ const Navadmindashboard = () => {
         alt="Car Logo"
         style={logoStyle}
       />
+      <Link
+                  to="/uploadcar"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+      Upload cars       </Link>
+      
 
       {/* Logout button aligned to the right */}
       <ul style={{ ...ulStyle, marginLeft: "auto" }}>

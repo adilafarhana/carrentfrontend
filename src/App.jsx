@@ -26,6 +26,7 @@ import Adminbookingdetails from './page/Adminbookingdetails'
 import Carreviews from './page/rentcaruser/Carreviews'
 import Usedcarbooking from './page/Usedcar.jsx/Usedcarbooking'
 import Orderstatus from './page/Orderstatus'
+import ViewReview from './page/Review/ViewReview'
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
           <Route path="/Usedcarbooking" element={<Usedcarbooking/>} />
           <Route path="/reviews/:id" element={<Carreviews/>} />
           <Route path="/Orderstatus" element={<Orderstatus/>} />
+          <Route path="/car-reviews/:carId" element={<ViewReview/>} />
 
           {/* <Route path="/blogdetails" element={<Blgdetails />} /> */}
           {/* <Route path="/viewrentblog" element={<Viewrentblog />} /> */}

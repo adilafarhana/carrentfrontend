@@ -83,6 +83,9 @@ const Rendcardashboard = () => {
                   <div className="card-body">
                     <h5>{car.brand} {car.model}</h5>
                     <p>{car.description}</p>
+                    <p><del>MRP: ₹{(car.price / (1 - car.discountPercentage / 100)).toFixed(2)}</del></p>
+            <p><strong>Discounted Price: ₹{car.price}</strong> ({car.discountPercentage}% OFF)</p>
+            {car.specialOffers && <p className="offer">🔥 {car.specialOffers}</p>}
                     <p><strong>Price:</strong> ₹{car.price}</p>
                     
                     <a href={`https://wa.me/?text=Interested%20in%20${car.brand}%20${car.model}`} target="_blank" className="btn btn-primary" style={{ display: "flex", alignItems: "center" }}>
