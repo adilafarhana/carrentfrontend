@@ -78,7 +78,7 @@ const Navused = () => {
         </li>
         <li style={liStyle}>
           <Link
-            to="/blogupload"
+            to="/Usedcarblog"
             style={linkStyle}
             onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
@@ -110,6 +110,14 @@ bloglist          </Link>
             onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
           >
 usedcar        </Link>
+<Link
+            to="/Orderstatus"
+            style={linkStyle}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+          >
+            Orderstatus
+          </Link>
 
       {/* Logout Button */}
       {localStorage.getItem("token") && (

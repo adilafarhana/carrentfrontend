@@ -8,7 +8,7 @@ const OrderStatus = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [reviewData, setReviewData] = useState({});
     const [submitting, setSubmitting] = useState(false);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const requestHeader = {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -50,17 +50,17 @@ const OrderStatus = () => {
     };
 
     const submitReview = async (booking) => {
-        if (submitting) return; 
+        if (submitting) return;
         setSubmitting(true);
-    
+
         const { rating, comment } = reviewData[booking._id] || {};
-    
+
         if (!rating || !comment) {
             alert("Please provide both rating and comment.");
             setSubmitting(false);
             return;
         }
-    
+
         const reviewPayload = {
             userId: localStorage.getItem("userId"),
             bookingId: booking._id,
@@ -68,29 +68,23 @@ const OrderStatus = () => {
             rating,
             comment
         };
-    
-        console.log("Sending review:", reviewPayload);  // Debugging log
-    
+
         try {
             await axios.post(
                 "http://localhost:3030/addReview",
                 reviewPayload,
                 requestHeader
             );
-    
+
             alert("Review submitted successfully!");
-        navigate(`/car-reviews/${booking.car?._id}`);
+            navigate(`/car-reviews/${booking.car?._id}`);
 
         } catch (error) {
-            console.error("Error submitting review:", error.response?.data);
             alert(error.response?.data?.message || "Failed to submit review.");
         } finally {
             setSubmitting(false);
         }
-
     };
-
-    
 
     const getStatusBadge = (status) => {
         const badgeStyles = {
@@ -106,6 +100,81 @@ const OrderStatus = () => {
     if (loading) return <p style={{ textAlign: "center", fontSize: "18px" }}>Loading your bookings...</p>;
     if (errorMessage) return <p style={{ textAlign: "center", color: "red", fontSize: "18px" }}>{errorMessage}</p>;
 
+    const rentalBookings = bookings.filter(booking => booking?.car?.type === "Rent");
+    const usedBookings = bookings.filter(booking => booking?.car?.type === "Used");
+
+    const renderBookingsTable = (bookingsList, title) => (
+        <div style={{ marginBottom: "30px" }}>
+            <h3 style={{ textAlign: "center", marginBottom: "20px", color: "#333", fontWeight: "bold" }}>{title}</h3>
+            {bookingsList.length === 0 ? (
+                <p style={{ textAlign: "center" }}>No {title.toLowerCase()} found.</p>
+            ) : (
+                <div style={{ overflowX: "auto" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                        <thead style={{ backgroundColor: "#343a40", color: "white" }}>
+                            <tr>
+                                <th>Car</th>
+                                <th>Booking Date</th>
+                                <th>Duration</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                                <th>Start Time</th> {/* New column for start time */}
+                                <th>Review</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {bookingsList.map((booking, index) => (
+                                <tr key={index}>
+                                    <td>{booking?.car?.brand} {booking?.car?.model}</td>
+                                    <td>{booking?.date}</td>
+                                    <td>{booking?.duration} hours</td>
+                                    <td>₹{booking?.totalPrice}</td>
+                                    <td>
+                                        <span style={{
+                                            ...getStatusBadge(booking.status),
+                                            padding: "6px 12px",
+                                            borderRadius: "8px",
+                                            display: "inline-block"
+                                        }}>
+                                            {booking.status}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {booking.status === "Delivered" && booking.startTime ? (
+                                            new Date(booking.startTime).toLocaleString()
+                                        ) : (
+                                            "N/A"
+                                        )}
+                                    </td>
+                                    <td>
+                                        {booking.status === "Delivered" && !booking.review && (
+                                            <div>
+                                                <select
+                                                    onChange={(e) => handleReviewChange(booking._id, "rating", e.target.value)}
+                                                >
+                                                    <option value="">Rate</option>
+                                                    {[1, 2, 3, 4, 5].map(num => (
+                                                        <option key={num} value={num}>{num}</option>
+                                                    ))}
+                                                </select>
+                                                <textarea
+                                                    placeholder="Leave a comment"
+                                                    onChange={(e) => handleReviewChange(booking._id, "comment", e.target.value)}
+                                                ></textarea>
+                                                <button onClick={() => submitReview(booking)}>Submit</button>
+                                            </div>
+                                        )}
+                                        {booking.review && <p>Review Submitted</p>}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </div>
+    );
+
     return (
         <div style={{ padding: "30px", maxWidth: "900px", margin: "0 auto" }}>
             <div style={{
@@ -117,64 +186,8 @@ const OrderStatus = () => {
                 <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333", fontWeight: "bold" }}>
                     Your Bookings
                 </h2>
-                {bookings.length === 0 ? (
-                    <p style={{ textAlign: "center" }}>No bookings found.</p>
-                ) : (
-                    <div style={{ overflowX: "auto" }}>
-                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                            <thead style={{ backgroundColor: "#343a40", color: "white" }}>
-                                <tr>
-                                    <th>Car</th>
-                                    <th>Booking Date</th>
-                                    <th>Duration</th>
-                                    <th>Total Price</th>
-                                    <th>Status</th>
-                                    <th>Review</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {bookings.map((booking, index) => (
-                                    <tr key={index}>
-                                        <td>{booking?.car?.brand} {booking?.car?.model}</td>
-                                        <td>{booking?.date}</td>
-                                        <td>{booking?.duration} hours</td>
-                                        <td>₹{booking?.totalPrice}</td>
-                                        <td>
-                                            <span style={{
-                                                ...getStatusBadge(booking.status),
-                                                padding: "6px 12px",
-                                                borderRadius: "8px",
-                                                display: "inline-block"
-                                            }}>
-                                                {booking.status}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {booking.status === "Delivered" && !booking.review && (
-                                                <div>
-                                                    <select 
-                                                        onChange={(e) => handleReviewChange(booking._id, "rating", e.target.value)}
-                                                    >
-                                                        <option value="">Rate</option>
-                                                        {[1, 2, 3, 4, 5].map(num => (
-                                                            <option key={num} value={num}>{num}</option>
-                                                        ))}
-                                                    </select>
-                                                    <textarea
-                                                        placeholder="Leave a comment"
-                                                        onChange={(e) => handleReviewChange(booking._id, "comment", e.target.value)}
-                                                    ></textarea>
-                                                    <button onClick={() => submitReview(booking)}>Submit</button>
-                                                </div>
-                                            )}
-                                            {booking.review && <p>Review Submitted</p>}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
+                {renderBookingsTable(rentalBookings, "Rental Car Bookings")}
+                {renderBookingsTable(usedBookings, "Used Car Bookings")}
             </div>
         </div>
     );

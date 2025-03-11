@@ -7,12 +7,15 @@ const AdminCarUpload = () => {
     model: "",
     price: "",
     rentalPricePerHour: "",
+    rentalPricePerday: "",
+    rentalPricePerweak: "",
+    rentalPricePermonth: "",
     description: "",
     type: "",
     specialOffers: "",
     discountPercentage: "",
     images: [],
-
+    status: "Available", // Default status
   });
 
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -45,63 +48,83 @@ const AdminCarUpload = () => {
     setFormData((prevData) => ({ ...prevData, images: files }));
     setImagePreviews(files.map((file) => URL.createObjectURL(file)));
   };
+ const [notification, setNotification] = useState("");
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!formData.brand || !formData.model || !formData.price || !formData.description || !formData.type || formData.images.length === 0) {
+    alert("Please fill in all fields and upload images.");
+    return;
+  }
+
+  if (formData.type === "Rent" && !formData.rentalPricePerHour) {
+    alert("Please specify the rental price per day.");
+    return;
+  }
+  if (formData.type === "Rent" && !formData.rentalPricePerday) {
+    alert("Please specify the rental price per day.");
+    return;
+  }
+  if (formData.type === "Rent" && !formData.rentalPricePerweak) {
+    alert("Please specify the rental price per weak.");
+    return;
+  }
+  if (formData.type === "Rent" && !formData.rentalPricePermonth) {
+    alert("Please specify the rental price per month.");
+    return;
+  }
   
-  const handleDelete = async (carId) => {
-    try {
-      await axios.delete(`http://localhost:3030/deletecar/${carId}`, requestHeader);
-      alert("Car deleted successfully!");
-      fetchCars();
-    } catch (error) {
-      console.error("Error deleting car:", error.message);
-      alert(`Error deleting car: ${error.message}`);
+  const formDataToSend = new FormData();
+  Object.keys(formData).forEach((key) => {
+    if (key === "images") {
+      formData.images.forEach((image) => formDataToSend.append("images", image));
+    } else {
+      formDataToSend.append(key, formData[key]);
     }
-  };
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    if (!formData.brand || !formData.model || !formData.price || !formData.description || !formData.type || formData.images.length === 0) {
-      alert("Please fill in all fields and upload images.");
-      return;
-    }
-  
-    if (formData.type === "Rent" && !formData.rentalPricePerHour) {
-      alert("Please specify the rental price per hour.");
-      return;
-    }
-  
-    let finalPrice = parseFloat(formData.price);
-  
-    if (formData.type === "Used" && formData.discountPercentage) {
-      const discountAmount = (finalPrice * parseFloat(formData.discountPercentage)) / 100;
-      finalPrice = finalPrice - discountAmount;
-    }
-  
-    const formDataToSend = new FormData();
-    formDataToSend.append("brand", formData.brand);
-    formDataToSend.append("model", formData.model);
-    formDataToSend.append("price", finalPrice);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("type", formData.type);
-    formDataToSend.append("specialOffers", formData.specialOffers);
-    formDataToSend.append("discountPercentage", formData.discountPercentage || 0);
-  
+  });
+
+  try {
+    const response = await axios.post("http://localhost:3030/uploadcar", formDataToSend, requestHeader);
+    alert(response?.data?.message || "Car uploaded successfully!");
+
     if (formData.type === "Rent") {
-      formDataToSend.append("rentalPricePerHour", formData.rentalPricePerHour);
+      setNotification("🚗 A new rental car has been uploaded!");
+    } else if (formData.type === "Used") {
+      setNotification("🚗 A new used car is now available for sale!");
     }
+
+    fetchCars();
+  } catch (error) {
+    console.error("Error saving car details:", error);
+    alert(`Error uploading car details: ${error.message}`);
+  }
+};
+
   
-    formData.images.forEach((image) => formDataToSend.append("images", image));
-  
+
+const handleDelete = async (carId) => {
+  try {
+    const response = await axios.delete(`http://localhost:3030/deletecar/${carId}`, requestHeader);
+    alert(response.data.message);
+    fetchCars();
+  } catch (error) {
+    console.error("Error deleting car:", error.response?.data?.message || error.message);
+    alert(`Error deleting car: ${error.response?.data?.message || error.message}`);
+  }
+};
+
+
+  const updateStatus = async (carId, newStatus) => {
     try {
-      const response = await axios.post("http://localhost:3030/uploadcar", formDataToSend, requestHeader);
-      alert(response?.data?.message || "Car uploaded successfully!");
+      await axios.put(`http://localhost:3030/updatestatus/${carId}`, { status: newStatus }, requestHeader);
+      alert(`Car status updated to ${newStatus}`);
       fetchCars();
     } catch (error) {
-      console.error("Error saving car details:", error);
-      alert(`Error uploading car details: ${error.message}`);
+      console.error("Error updating status:", error);
+      alert("Error updating status.");
     }
   };
-  
 
   return (
     <div className="container">
@@ -138,13 +161,41 @@ const AdminCarUpload = () => {
                 <td><label>Rental Price per Hour:</label></td>
                 <td><input type="number" name="rentalPricePerHour" onChange={handleChange} value={formData.rentalPricePerHour} required /></td>
               </tr>
+              
+            )}
+             {formData.type === "Rent" && (
+              <tr>
+                <td><label>Rental Price per day:</label></td>
+                <td><input type="number" name="rentalPricePerday" onChange={handleChange} value={formData.rentalPricePerday} required /></td>
+              </tr>
+              
+            )}
+             {formData.type === "Rent" && (
+              <tr>
+                <td><label>Rental Price per weak:</label></td>
+                <td><input type="number" name="rentalPricePerweak" onChange={handleChange} value={formData.rentalPricePerweak} required /></td>
+              </tr>
+              
+            )}
+             {formData.type === "Rent" && (
+              <tr>
+                <td><label>Rental Price per month:</label></td>
+                <td><input type="number" name="rentalPricePermonth" onChange={handleChange} value={formData.rentalPricePermonth} required /></td>
+              </tr>
+              
             )}
             <tr>
               <td><label>Description:</label></td>
               <td><textarea name="description" onChange={handleChange} value={formData.description} required /></td>
             </tr>
-            <input type="number" name="discountPercentage" placeholder="Discount %" onChange={handleChange} />
-      <input type="text" name="specialOffers" placeholder="Special Offer (if any)" onChange={handleChange} />
+            <tr>
+              <td><label>Discount Percentage:</label></td>
+              <td><input type="number" name="discountPercentage" placeholder="Discount %" onChange={handleChange} value={formData.discountPercentage} /></td>
+            </tr>
+            <tr>
+              <td><label>Special Offer:</label></td>
+              <td><input type="text" name="specialOffers" placeholder="Special Offer (if any)" onChange={handleChange} value={formData.specialOffers} /></td>
+            </tr>
             <tr>
               <td><label>Upload Images:</label></td>
               <td><input type="file" name="images" multiple accept="image/*" onChange={handleFileChange} required /></td>
@@ -174,6 +225,7 @@ const AdminCarUpload = () => {
             <th>Price</th>
             <th>Rental Price</th>
             <th>Type</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -185,17 +237,28 @@ const AdminCarUpload = () => {
                 <td>{car.model}</td>
                 <td>{car.price} USD</td>
                 <td>{car.type === "Rent" ? `${car.rentalPricePerHour} USD/hour` : "N/A"}</td>
+                <td>{car.type === "Rent" ? `${car.rentalPricePerday} USD/hour` : "N/A"}</td>
+                <td>{car.type === "Rent" ? `${car.rentalPricePerweak} USD/hour` : "N/A"}</td>
+                <td>{car.type === "Rent" ? `${car.rentalPricePermonth} USD/hour` : "N/A"}</td>
                 <td>{car.type}</td>
+                <td>{car.status}</td>
                 <td>
-                  <button onClick={() => handleDelete(car._id)} className="btn btn-danger">
-                    Delete
-                  </button>
-                </td>
+  <button onClick={() => handleDelete(car._id)} className="btn btn-danger">
+    Delete
+  </button>
+  <button
+    onClick={() => updateStatus(car._id, car.status === "Available" ? "Not Available" : "Available")}
+    className={car.status === "Available" ? "btn btn-warning" : "btn btn-success"}
+  >
+    {car.status === "Available" ? "Mark as Not Available" : "Mark as Available"}
+  </button>
+</td>
+
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="6">No cars uploaded yet.</td>
+              <td colSpan="7">No cars uploaded yet.</td>
             </tr>
           )}
         </tbody>

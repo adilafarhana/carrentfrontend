@@ -15,6 +15,7 @@ const Adminbookingdetails = () => {
       try {
         const response = await axios.post("http://localhost:3030/getbooking", {}, requestHeader);
         console.log("Bookings response:", response.data);
+
         if (Array.isArray(response.data) && response.data.length > 0) {
           setBookings(response.data);
         } else {
@@ -38,7 +39,7 @@ const Adminbookingdetails = () => {
         alert("Booking status updated successfully!");
         setBookings((prevBookings) =>
           prevBookings.map((booking) =>
-            booking._id === id ? { ...booking, status } : booking
+            booking._id === id ? { ...booking, status, startTime: response.data.booking.startTime } : booking
           )
         );
       }
@@ -51,15 +52,19 @@ const Adminbookingdetails = () => {
   if (loading) return <p className="text-center">Loading bookings...</p>;
   if (errorMessage) return <p className="text-center text-danger">{errorMessage}</p>;
 
-  return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">All Bookings</h2>
-      {bookings.length === 0 ? (
-        <p className="text-center">No bookings found.</p>
+  const rentBookings = bookings.filter((booking) => booking?.car?.type === "Rent");
+  const usedBookings = bookings.filter((booking) => booking?.car?.type === "Used");
+
+  const renderBookingsTable = (bookingsList, title) => (
+    <div className="mt-4">
+      <h3 className="text-center">{title}</h3>
+      {bookingsList.length === 0 ? (
+        <p className="text-center">No {title.toLowerCase()} bookings found.</p>
       ) : (
         <table className="table table-striped">
           <thead>
             <tr>
+              <th>Type</th>
               <th>User Name</th>
               <th>Email</th>
               <th>Phone</th>
@@ -68,13 +73,17 @@ const Adminbookingdetails = () => {
               <th>Booking Date</th>
               <th>Duration</th>
               <th>Total Price</th>
+              <th>Start Time</th>
+              <th>Payment Details</th> {/* New column for payment details */}
+              <th>Images</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {bookings.map((booking, index) => (
+            {bookingsList.map((booking, index) => (
               <tr key={index}>
+                <td>{booking?.car?.type || "N/A"}</td>
                 <td>{booking?.user?.name || "N/A"}</td>
                 <td>{booking?.user?.email || "N/A"}</td>
                 <td>{booking?.user?.phone || "N/A"}</td>
@@ -83,6 +92,32 @@ const Adminbookingdetails = () => {
                 <td>{booking?.date}</td>
                 <td>{booking?.duration} hours</td>
                 <td>₹{booking?.totalPrice}</td>
+                <td>{booking?.startTime ? new Date(booking.startTime).toLocaleString() : "N/A"}</td>
+                <td>
+                  {booking.payment ? (
+                    <div>
+                      <p><strong>Payment ID:</strong> {booking.payment.paymentId}</p>
+                      <p><strong>Amount:</strong> ₹{booking.payment.amount}</p>
+                      <p><strong>Status:</strong> {booking.payment.status}</p>
+                    </div>
+                  ) : (
+                    <p>No payment details available.</p>
+                  )}
+                </td>
+                <td>
+                  {booking.images?.length > 0 ? (
+                    booking.images.map((image, idx) => (
+                      <img
+                        key={idx}
+                        src={`http://localhost:3030${image}`}
+                        alt={`Booking Image ${idx + 1}`}
+                        style={{ width: "100px", height: "auto", margin: "5px" }}
+                      />
+                    ))
+                  ) : (
+                    <p>No images available.</p>
+                  )}
+                </td>
                 <td>
                   <select
                     className="form-select"
@@ -93,7 +128,6 @@ const Adminbookingdetails = () => {
                     <option value="Confirmed">Confirmed</option>
                     <option value="Delivered">Delivered</option>
                     <option value="Cancelled">Cancelled</option>
-
                   </select>
                 </td>
                 <td>
@@ -106,6 +140,14 @@ const Adminbookingdetails = () => {
           </tbody>
         </table>
       )}
+    </div>
+  );
+
+  return (
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">All Bookings</h2>
+      {renderBookingsTable(rentBookings, "Rental Car Bookings")}
+      {renderBookingsTable(usedBookings, "Used Car Bookings")}
     </div>
   );
 };

@@ -70,23 +70,16 @@ const NavHome= () => {
             Rent Car
           </Link>
           <Link
-            to="/signin"
+            to="/userdetails"
             style={linkStyle}
             onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
           >
-           Reviews 
+           Userdetails 
           </Link>
+
           <Link
-            to="/signin"
-            style={linkStyle}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-          >
-           offers
-          </Link>
-          <Link
-            to="/signin"
+            to="/blogupload"
             style={linkStyle}
             onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}

@@ -76,7 +76,7 @@ const Navrent = () => {
         </li>
         <li style={liStyle}>
         </li>
-        <li style={liStyle}>
+        {/* <li style={liStyle}>
           <Link
             to="/blogupload"
             style={linkStyle}
@@ -85,7 +85,7 @@ const Navrent = () => {
           >
             Blogs
           </Link>
-        </li>
+        </li> */}
         <li style={liStyle}>
           <Link
             to="/userdetails"
@@ -96,13 +96,8 @@ const Navrent = () => {
             userdetails
           </Link>
         </li>
-      </ul>  <Link
-            to="/bloglist"
-            style={linkStyle}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-          >
-bloglist          </Link>
+      </ul>
+       
 <Link
             to="/Orderstatus"
             style={linkStyle}

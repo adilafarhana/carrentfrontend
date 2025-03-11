@@ -27,6 +27,11 @@ import Carreviews from './page/rentcaruser/Carreviews'
 import Usedcarbooking from './page/Usedcar.jsx/Usedcarbooking'
 import Orderstatus from './page/Orderstatus'
 import ViewReview from './page/Review/ViewReview'
+import Usedcarblog from './page/Usedcarblog'
+import RentalPricing from './page/RentalPricing'
+import Notification from './page/Notification'
+
+
 
 
 function App() {
@@ -63,6 +68,9 @@ function App() {
           <Route path="/reviews/:id" element={<Carreviews/>} />
           <Route path="/Orderstatus" element={<Orderstatus/>} />
           <Route path="/car-reviews/:carId" element={<ViewReview/>} />
+          <Route path="/Usedcarblog" element={<Usedcarblog/>} />
+          <Route path="/RentalPricing" element={<RentalPricing/>} />
+          <Route path="/Notification" element={<Notification/>} />
 
           {/* <Route path="/blogdetails" element={<Blgdetails />} /> */}
           {/* <Route path="/viewrentblog" element={<Viewrentblog />} /> */}
