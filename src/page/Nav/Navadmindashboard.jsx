@@ -20,6 +20,7 @@ const Navadmindashboard = () => {
     left: 0,
     width: "100%",
     zIndex: 1000,
+    height:70
   };
 
   const ulStyle = {
@@ -45,8 +46,8 @@ const Navadmindashboard = () => {
   };
 
   const logoStyle = {
-    width: "120px",
-    height: "auto",
+    width: "70px",
+    height: "10",
   };
 
   return (
@@ -57,6 +58,21 @@ const Navadmindashboard = () => {
         alt="Car Logo"
         style={logoStyle}
       />
+        <Link
+                  to="/signin"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+     home      </Link>
+       <Link
+                  to="/admin"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+     back      </Link>
+     
       <Link
                   to="/uploadcar"
                   style={linkStyle}
@@ -64,6 +80,49 @@ const Navadmindashboard = () => {
                   onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
                 >
       Upload cars       </Link>
+      <Link
+                  to="/Adminbookingdetails"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+     Adminbookingdetails     </Link>
+     <Link
+                  to="/Predict"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+     Predict     </Link>
+     <Link
+                  to="/AdminFAQ"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+     AdminFAQ     </Link>
+     <Link
+                  to="/Admincomplaints"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+     Admincomplaints     </Link>
+     <Link
+                  to="/bloglist"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+     bloglist     </Link>
+     <Link
+                  to="/viewusers"
+                  style={linkStyle}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
+                >
+                  Used details
+                </Link>
       
 
       {/* Logout button aligned to the right */}
@@ -81,14 +140,7 @@ const Navadmindashboard = () => {
           </li>
         ) : null}
       </ul>
-        <Link
-                  to="/viewusers"
-                  style={linkStyle}
-                  onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-                  onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-                >
-                  Used Car
-                </Link>
+     
     </nav>
   );
 };

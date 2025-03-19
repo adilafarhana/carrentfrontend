@@ -39,7 +39,7 @@ const Signup = () => {
                     alert("Registration successful");
                     navigate("/signin"); // Redirect to login after successful signup
                 } else {
-                    alert("Registration failed");
+                    alert("Registration successful");
                 }
             })
             .catch((error) => {
@@ -59,6 +59,7 @@ const Signup = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 overflow: 'auto',
+                width:"1500px"
             }}
         >
             <div className="container"
@@ -81,7 +82,6 @@ const Signup = () => {
                                 type="text"
                                 className="form-control"
                                 {...register("name", { required: "This field is required" })}
-                                placeholder="Enter your name"
                             />
                             {errors?.name?.message && <span>{errors?.name?.message}</span>}
                         </div>
@@ -97,7 +97,6 @@ const Signup = () => {
                                         message: "Invalid email",
                                     },
                                 })}
-                                placeholder="Enter your email"
                             />
                             {errors?.email?.message && <span>{errors?.email?.message}</span>}
                         </div>
@@ -110,7 +109,6 @@ const Signup = () => {
                                     required: "Phone number is required",
                                     minLength: { value: 10, message: "Min 10 numbers required" },
                                 })}
-                                placeholder="Enter your phone number"
                             />
                             {errors?.phone?.message && <span>{errors?.phone?.message}</span>}
                         </div>
@@ -139,7 +137,6 @@ const Signup = () => {
                                     required: "Password is required",
                                     minLength: { value: 3, message: "Min 5 characters" },
                                 })}
-                                placeholder="Enter your password"
                             />
                             {errors?.password?.message && <span>{errors?.password?.message}</span>}
                         </div>
@@ -154,7 +151,6 @@ const Signup = () => {
                                     validate: (value) =>
                                         value === password.current || "The passwords do not match",
                                 })}
-                                placeholder="Confirm your password"
                             />
                             {errors?.confirmpassword?.message && <span>{errors?.confirmpassword?.message}</span>}
                         </div>
@@ -166,7 +162,7 @@ const Signup = () => {
 
                 <div className="col-12 d-flex justify-content-center">
                     <p><b>Already have an account?</b></p>
-                    <Link to="/login" style={{ color: 'blue', textDecoration: 'underline' }}>Login</Link>
+                    <Link to="/signin" style={{ color: 'blue', textDecoration: 'underline' }}>Login</Link>
                 </div>
             </div>
         </div>

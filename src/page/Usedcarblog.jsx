@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import NavHome from "./Nav/NavHome";
 // import Navrent from "../Nav/Navrent";
 
 
@@ -88,6 +89,7 @@ const Usedcarblog = () => {
 
   return (
     <div className="container">
+      <NavHome/>
       {/* <Navrent/> */}
       <h2>Upload blog Details</h2>
       <form onSubmit={handleSubmit} className="form-container">
@@ -163,7 +165,7 @@ const Usedcarblog = () => {
           justify-content: center;
           align-items: center;
           flex-direction: column;
-          max-width: 900px;
+          max-width: 100000px;
           margin: 0 auto;
           padding: 30px;
           background-color: #fff;

@@ -71,8 +71,10 @@ const BookingConfirmation = () => {
         <div className="card-body">
           <p><strong>Brand:</strong> {car?.brand}</p>
           <p><strong>Model:</strong> {car?.model}</p>
+          <p><strong>Mileage:</strong> {car.mileage} km</p>
+       
           {car?.type === "Used" && <p><strong>Price:</strong> ₹{car?.price}</p>}
-          {car?.type === "Rent" && <p><strong>Rental Price Per Hour:</strong> ₹{car?.rentalPricePerHour}</p>}
+
 
           <hr />
 
@@ -86,17 +88,14 @@ const BookingConfirmation = () => {
           {car?.type === "Rent" && (
             <>
               <p><strong>Duration:</strong> {bookingData?.duration} hours</p>
-              <h5 className="text-primary"><strong>Total Price:</strong> ₹{bookingData?.totalPrice}</h5>
+              <h5 className="text-primary"><strong>totalPrice :</strong> ₹{bookingData?.totalPrice}</h5>
             </>
           )}
           <p><strong>Status:</strong> {bookingData?.status}</p>
 
-          <a href={`tel:${bookingData?.phone}`} className="btn btn-success w-100 mt-3">
-            Call to Confirm
-          </a>
 
-          <button onClick={() => navigate("/usedcardashboard")} className="btn btn-primary w-100 mt-3">
-            Back to Home
+          <button onClick={() => navigate("/usedcardashboard")} className="btn btn-success  w-100 mt-3">
+            check the booking status
           </button>
         </div>
       </div>

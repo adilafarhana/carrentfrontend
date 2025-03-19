@@ -30,6 +30,15 @@ import ViewReview from './page/Review/ViewReview'
 import Usedcarblog from './page/Usedcarblog'
 import RentalPricing from './page/RentalPricing'
 import Notification from './page/Notification'
+import Predict from './page/Predict'
+import FAQSection from './page/FAQSection'
+import AdminFAQ from './page/AdminFAQ'
+import Complaint from './page/Compliant'
+import Admincomplaints from './page/Admincomplaints'
+import Usercomplaint from './page/Usercomplaint'
+import Aboutas from './page/Aboutas'
+import Contact from './page/Contact'
+import UploadCars from './page/Uploadcars'
 
 
 
@@ -45,13 +54,14 @@ function App() {
           <Route element={<AdminRoute />}>
             <Route path="/car-details/:id" element={<Cardetails />} />
             <Route path="/admincardetails" element={<Admincardetails />} />
-            <Route path="/admin" element={<Admindashboard />} />
             <Route path="/uploadcar" element={<Admincarupload />} />
           </Route>
 
           <Route element={<UserRoute />}>
             <Route path="/rendcardashboard" element={<Rendcardashboard />} />
           </Route>
+          <Route path="/admin" element={<Admindashboard />} />
+
 
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
@@ -71,6 +81,15 @@ function App() {
           <Route path="/Usedcarblog" element={<Usedcarblog/>} />
           <Route path="/RentalPricing" element={<RentalPricing/>} />
           <Route path="/Notification" element={<Notification/>} />
+          <Route path="/Predict" element={<Predict/>} />
+          <Route path="/FAQSection" element={<FAQSection/>} />
+          <Route path="/AdminFAQ" element={<AdminFAQ/>} />
+          <Route path="/Complaint" element={<Complaint/>} />
+          <Route path="/Admincomplaints" element={<Admincomplaints/>} />
+          <Route path="/user/complaint" element={<Usercomplaint/>} />
+          <Route path="/Aboutas" element={<Aboutas/>} />
+          <Route path="/Contact" element={<Contact/>} />
+          <Route path="/UploadCars" element={<UploadCars/>} />
 
           {/* <Route path="/blogdetails" element={<Blgdetails />} /> */}
           {/* <Route path="/viewrentblog" element={<Viewrentblog />} /> */}

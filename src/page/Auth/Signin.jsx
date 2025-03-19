@@ -53,7 +53,7 @@ const Signin = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background:"#efdecd",
+        background:"rgba(255, 255, 255, 0.8)",
         backgroundSize: "cover",
         position: "relative",
       }}
@@ -65,7 +65,7 @@ const Signin = () => {
           position: "absolute",
           top: "20px",
           left: "20px",
-          color: "white",
+          color: "rgba(255, 255, 255, 0.8)",
           textDecoration: "none",
           fontWeight: "bold",
           fontSize: "18px",
@@ -77,7 +77,7 @@ const Signin = () => {
       {/* Login Form Box */}
       <div
         style={{
-          background: "rgba(255, 255, 255, 0.2)",
+          background: "rgba(255, 255, 255, 0.8)",
           backdropFilter: "blur(12px)",
           borderRadius: "15px",
           padding: "30px",
@@ -136,7 +136,7 @@ const Signin = () => {
                 borderRadius: "8px",
                 outline: "none",
                 fontSize: "16px",
-                background: "rgba(255, 255, 255, 0.3)",
+                background: "rgba(255, 255, 255, 0.8)",
                 color: "black",
               }}
             />

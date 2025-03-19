@@ -35,8 +35,8 @@ const Usedcardashboard = () => {
       <Navrent />
 
       <header className="bg-primary text-white text-center py-5">
-        <h1>Rent a Car Easily</h1>
-        <p>Find the best rental deals tailored to your needs!</p>
+      <h1>Welcome to Our Rent car Platform</h1>
+      <p>Find the best rental deals tailored to your needs!</p>
       </header>
 
       {/* Image Carousel */}
@@ -106,7 +106,8 @@ const Usedcardashboard = () => {
 
                   <div className="card-body">
                     <h5>{car.brand}</h5>
-                    <p><strong>Price per Hour:</strong> ₹{car.rentalPricePerHour}</p>
+                    <h5>{car.model}</h5>
+
                     <p><strong>Status:</strong> {car.status}</p>
 
                     {/* Conditionally disable the review button if the car is not available */}
@@ -124,7 +125,54 @@ const Usedcardashboard = () => {
           ) : (
             <p className="text-center">No rental cars available.</p>
           )}
+        </div> <footer
+        style={{
+          backgroundColor: "#000000", // Black background
+          color: "#ffffff", // White text
+          padding: "40px 20px",
+          marginTop: "40px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            gap: "20px",
+          }}
+        >
+          <div style={{ flex: "1", minWidth: "200px" }}>
+            <h4 style={{ marginBottom: "15px" }}>About Us</h4>
+            <p>We are the leading online vehicle marketplace offering car sales, rentals, and best-in-class customer support.</p>
+          </div>
+          <div style={{ flex: "1", minWidth: "200px" }}>
+            <h4 style={{ marginBottom: "15px" }}>Contact</h4>
+            <p>Email: support@car-marketplace.com</p>
+            <p>Phone: +91 98765 43210</p>
+            <p>Location: Ernakulam, India</p>
+          </div>
+          <div style={{ flex: "1", minWidth: "200px" }}>
+            <h4 style={{ marginBottom: "15px" }}>Rent a Car</h4>
+            <p>Choose from a wide range of cars for rent, from economy to luxury.</p>
+          </div>
+          <div style={{ flex: "1", minWidth: "200px" }}>
+            <h4 style={{ marginBottom: "15px" }}>Used Cars</h4>
+            <p>Browse our collection of quality pre-owned cars at unbeatable prices.</p>
+          </div>
         </div>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "20px",
+            paddingTop: "20px",
+            borderTop: "1px solid #444",
+          }}
+        >
+          &copy; 2025 Car Marketplace | All rights reserved.
+        </div>
+      </footer>
       </section>
     </>
   );
