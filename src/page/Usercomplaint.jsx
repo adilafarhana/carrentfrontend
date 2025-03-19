@@ -13,7 +13,7 @@ const Usercomplaint = () => {
   const fetchComplaints = async () => {
     try {
       const userId = localStorage.getItem("userId"); // Get user ID from localStorage
-      const response = await axios.get(`https://carrentbackend-1-tpmm.onrender.com//ownComplaint`, {
+      const response = await axios.get(`https://carrentbackend-1-tpmm.onrender.com/ownComplaint`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setComplaints(response.data.complaints);

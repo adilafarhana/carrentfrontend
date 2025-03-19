@@ -54,7 +54,7 @@ const Complaint = () => {
       console.log("Submitting Complaint Data:", payload); // Log the payload
 
       axios
-        .post("https://carrentbackend-1-tpmm.onrender.com//complaints", payload, {
+        .post("https://carrentbackend-1-tpmm.onrender.com/complaints", payload, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         .then((response) => {

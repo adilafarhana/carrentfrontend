@@ -21,7 +21,7 @@ const Usedcarblog = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//getblogs",requestHeader);
+      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com/getblogs",requestHeader);
       const data = await response.data
       setBlogs(data);
     } catch (error) {
@@ -62,7 +62,7 @@ const Usedcarblog = () => {
     });
 
     try {
-      const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com//uploadblog", formDataToSend,requestHeader);
+      const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com/uploadblog", formDataToSend,requestHeader);
 
       alert(response?.data?.message || "blog uploaded successfully!");
 
@@ -76,7 +76,7 @@ const Usedcarblog = () => {
 
   const handleDelete = async (blogId) => {
     try {
-      const response = await axios.delete(`https://carrentbackend-1-tpmm.onrender.com//deleteblog/${blogId}`, requestHeader);
+      const response = await axios.delete(`https://carrentbackend-1-tpmm.onrender.com/deleteblog/${blogId}`, requestHeader);
       alert(response.data.message || "Blog deleted successfully!");
   
       setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== blogId));

@@ -7,7 +7,7 @@ const BlogList = () => {
   const [Blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("https://carrentbackend-1-tpmm.onrender.com//Blogs")  
+    fetch("https://carrentbackend-1-tpmm.onrender.com/Blogs")  
       .then((response) => response.json())
       .then((data) => setBlogs(data))
       .catch((error) => console.error("Error fetching blog details:", error));

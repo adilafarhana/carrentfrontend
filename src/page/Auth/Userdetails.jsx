@@ -16,7 +16,7 @@ const UserDetails = () => {
   const userprofile = async () => {
     try {
       const response = await axios.get(
-        "https://carrentbackend-1-tpmm.onrender.com//userprofile",
+        "https://carrentbackend-1-tpmm.onrender.com/userprofile",
         requestHeader
       );
       console.log("API Response:", response.data);

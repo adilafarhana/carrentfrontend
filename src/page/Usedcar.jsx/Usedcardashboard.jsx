@@ -8,7 +8,7 @@ const Usedcardashboard = () => {
 
   useEffect(() => {
     axios
-      .post("https://carrentbackend-1-tpmm.onrender.com//cars", { type: "Rent" })
+      .post("https://carrentbackend-1-tpmm.onrender.com/cars", { type: "Rent" })
       .then((response) => {
         setRentCars(response.data);
       })
@@ -18,7 +18,7 @@ const Usedcardashboard = () => {
   }, []);
   const fetchRentalCars = async () => {
     try {
-      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//getcars", requestHeader);
+      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com/getcars", requestHeader);
       const rentalCars = response.data.filter(car => car.type === "Rent");
       setCars(rentalCars);
     } catch (error) {

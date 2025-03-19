@@ -28,7 +28,7 @@ const CarDetails = () => {
     const fetchCarDetails = async () => {
       try {
         const id = location.state?.id;
-        const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com//cardetails", { id }, requestHeader);
+        const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com/cardetails", { id }, requestHeader);
         setCar(response.data);
       } catch (error) {
         console.error("Error fetching car details:", error);
@@ -96,7 +96,7 @@ const CarDetails = () => {
       console.log("Payment Data:", paymentData); // Debugging
   
       const response = await axios.post(
-        "https://carrentbackend-1-tpmm.onrender.com//savePayment",
+        "https://carrentbackend-1-tpmm.onrender.com/savePayment",
         paymentData,
         requestHeader
       );
@@ -145,7 +145,7 @@ const CarDetails = () => {
     }
   
     try {
-      const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com//postbooking", formData, {
+      const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com/postbooking", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,

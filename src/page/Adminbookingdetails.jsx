@@ -16,7 +16,7 @@ const Adminbookingdetails = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com//getbooking", {}, requestHeader);
+        const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com/getbooking", {}, requestHeader);
         console.log("Bookings response:", response.data);
 
         if (Array.isArray(response.data) && response.data.length > 0) {
@@ -38,7 +38,7 @@ const Adminbookingdetails = () => {
   const updateStatus = async (id, status) => {
     try {
       const response = await axios.post(
-        "https://carrentbackend-1-tpmm.onrender.com//updateOrderStatus",
+        "https://carrentbackend-1-tpmm.onrender.com/updateOrderStatus",
         { id, status },
         requestHeader
       );

@@ -34,7 +34,7 @@ const AdminCarUpload = () => {
 
   const fetchCars = async () => {
     try {
-      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//getcars", requestHeader);
+      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com/getcars", requestHeader);
       setCars(response.data);
     } catch (error) {
       console.error("Error fetching cars:", error);
@@ -93,7 +93,7 @@ const AdminCarUpload = () => {
     });
 
     try {
-      const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com//uploadcar", formDataToSend, requestHeader);
+      const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com/uploadcar", formDataToSend, requestHeader);
       alert(response?.data?.message || "Car uploaded successfully!");
 
       if (formData.type === "Rent") {
@@ -114,7 +114,7 @@ const AdminCarUpload = () => {
 
     try {
       const response = await axios.delete(
-        `https://carrentbackend-1-tpmm.onrender.com//deletecar/${carId}`,
+        `https://carrentbackend-1-tpmm.onrender.com/deletecar/${carId}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -129,7 +129,7 @@ const AdminCarUpload = () => {
 
   const updateStatus = async (carId, newStatus) => {
     try {
-      await axios.put(`https://carrentbackend-1-tpmm.onrender.com//updatestatus/${carId}`, { status: newStatus }, requestHeader);
+      await axios.put(`https://carrentbackend-1-tpmm.onrender.com/updatestatus/${carId}`, { status: newStatus }, requestHeader);
       alert(`Car status updated to ${newStatus}`);
       fetchCars();
     } catch (error) {

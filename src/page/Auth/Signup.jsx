@@ -33,7 +33,7 @@ const Signup = () => {
         }
 
         // Post signup data
-        axios.post("https://carrentbackend-1-tpmm.onrender.com//signup", data)
+        axios.post("https://carrentbackend-rnpp.onrender.com/signup", data)
             .then((response) => {
                 if (response.data.status === "SIGNUP") {
                     alert("Registration successful");

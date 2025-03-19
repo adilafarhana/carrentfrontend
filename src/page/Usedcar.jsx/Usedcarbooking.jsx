@@ -42,7 +42,7 @@ const Usedcarbooking = () => {
 
     try {
       const response = await axios.post(
-        "https://carrentbackend-1-tpmm.onrender.com//postPurchase",
+        "https://carrentbackend-1-tpmm.onrender.com/postPurchase",
         bookingData,
         requestHeader
       );

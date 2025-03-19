@@ -18,7 +18,7 @@ const BookingConfirmation = () => {
       try {
         setLoading(true);
         const response = await axios.post(
-          "https://carrentbackend-1-tpmm.onrender.com//Bookingdetails",
+          "https://carrentbackend-1-tpmm.onrender.com/Bookingdetails",
           { id },
           requestHeader
         );

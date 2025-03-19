@@ -13,7 +13,7 @@ const Admincomplaints = () => {
 
   const fetchComplaints = async () => {
     try {
-      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//complaintList", {
+      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com/complaintList", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setComplaints(response.data);
@@ -28,7 +28,7 @@ const Admincomplaints = () => {
   const handleStatusChange = async (id, status) => {
     try {
       const response = await axios.put(
-        `https://carrentbackend-1-tpmm.onrender.com//complaints/${id}`,
+        `https://carrentbackend-1-tpmm.onrender.com/complaints/${id}`,
         { status },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
@@ -47,7 +47,7 @@ const Admincomplaints = () => {
   const handleDeleteComplaint = async (id) => {
     try {
       const response = await axios.delete(
-        `https://carrentbackend-1-tpmm.onrender.com//complaints/${id}`,
+        `https://carrentbackend-1-tpmm.onrender.com/complaints/${id}`,
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
 

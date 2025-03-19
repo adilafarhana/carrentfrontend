@@ -11,12 +11,12 @@ const Rendcardashboard = () => {
   const [cars, setCars] = useState([]);
 
   useEffect(() => {
-    axios.post("https://carrentbackend-1-tpmm.onrender.com//cars", { type: "Used" })
+    axios.post("https://carrentbackend-1-tpmm.onrender.com/cars", { type: "Used" })
       .then((response) => {
         setCars(response.data);
 
         // Fetch notifications and alert the user
-        axios.get("https://carrentbackend-1-tpmm.onrender.com//getnotication", requestHeader).then((notificationResponse) => {
+        axios.get("https://carrentbackend-1-tpmm.onrender.com/getnotication", requestHeader).then((notificationResponse) => {
           if (notificationResponse?.data) {
             alert(notificationResponse.data.map(notification => notification.message).join('\n'));
           }

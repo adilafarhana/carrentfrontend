@@ -7,7 +7,7 @@ const Viewusers = () => {
  
 
     const fetchData = () => {
-      axios.get("https://carrentbackend-1-tpmm.onrender.com//viewuser", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+      axios.get("https://carrentbackend-1-tpmm.onrender.com/viewuser", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
        
       ).then(
           (response) => {
