@@ -27,7 +27,7 @@ const OrderStatus = () => {
                 }
 
                 const response = await axios.post(
-                    `http://localhost:3030/userBookings/${storedUserId}`, {}, requestHeader
+                    `https://carrentbackend-1-tpmm.onrender.com//userBookings/${storedUserId}`, {}, requestHeader
                 );
 
                 setBookings(response.data || []);
@@ -73,7 +73,7 @@ const OrderStatus = () => {
 
         try {
             await axios.post(
-                "http://localhost:3030/addReview",
+                "https://carrentbackend-1-tpmm.onrender.com//addReview",
                 reviewPayload,
                 requestHeader
             );

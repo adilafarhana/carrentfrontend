@@ -42,7 +42,7 @@ const Usedcarbooking = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3030/postPurchase",
+        "https://carrentbackend-1-tpmm.onrender.com//postPurchase",
         bookingData,
         requestHeader
       );
@@ -68,7 +68,7 @@ const Usedcarbooking = () => {
           <h2 className="text-center">{car.brand} {car.model}</h2>
           <div className="card mx-auto text-center shadow p-3" style={{ maxWidth: "800px" }}>
             {car.images?.length > 0 && (
-              <img src={`http://localhost:3030${car.images[0]}`} alt={car.model} className="card-img-top" />
+              <img src={`https://carrentbackend-1-tpmm.onrender.com/${car.images[0]}`} alt={car.model} className="card-img-top" />
             )}
             <div className="card-body">
               <p><strong>Brand:</strong> {car.brand}</p>

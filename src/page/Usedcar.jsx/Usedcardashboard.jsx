@@ -8,7 +8,7 @@ const Usedcardashboard = () => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3030/cars", { type: "Rent" })
+      .post("https://carrentbackend-1-tpmm.onrender.com//cars", { type: "Rent" })
       .then((response) => {
         setRentCars(response.data);
       })
@@ -18,7 +18,7 @@ const Usedcardashboard = () => {
   }, []);
   const fetchRentalCars = async () => {
     try {
-      const response = await axios.get("http://localhost:3030/getcars", requestHeader);
+      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//getcars", requestHeader);
       const rentalCars = response.data.filter(car => car.type === "Rent");
       setCars(rentalCars);
     } catch (error) {
@@ -95,12 +95,12 @@ const Usedcardashboard = () => {
                   {car.status === "Available" ? (
                     <Link to={`/car-details/${car._id}`} state={{ id: car._id }}>
                       {car.images?.length > 0 && (
-                        <img src={`http://localhost:3030${car.images[0]}`} alt={car.model} className="card-img-top" />
+                        <img src={`https://carrentbackend-1-tpmm.onrender.com/${car.images[0]}`} alt={car.model} className="card-img-top" />
                       )}
                     </Link>
                   ) : (
                     car.images?.length > 0 && (
-                      <img src={`http://localhost:3030${car.images[0]}`} alt={car.model} className="card-img-top" style={{ opacity: 0.6 }} />
+                      <img src={`https://carrentbackend-1-tpmm.onrender.com/${car.images[0]}`} alt={car.model} className="card-img-top" style={{ opacity: 0.6 }} />
                     )
                   )}
 

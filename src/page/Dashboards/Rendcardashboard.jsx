@@ -11,12 +11,12 @@ const Rendcardashboard = () => {
   const [cars, setCars] = useState([]);
 
   useEffect(() => {
-    axios.post("http://localhost:3030/cars", { type: "Used" })
+    axios.post("https://carrentbackend-1-tpmm.onrender.com//cars", { type: "Used" })
       .then((response) => {
         setCars(response.data);
 
         // Fetch notifications and alert the user
-        axios.get("http://localhost:3030/getnotication", requestHeader).then((notificationResponse) => {
+        axios.get("https://carrentbackend-1-tpmm.onrender.com//getnotication", requestHeader).then((notificationResponse) => {
           if (notificationResponse?.data) {
             alert(notificationResponse.data.map(notification => notification.message).join('\n'));
           }
@@ -132,7 +132,7 @@ const Rendcardashboard = () => {
               <div key={car._id} className="col-md-4 mb-4">
                 <div className="card">
                   {car.images.length > 0 && (
-                    <img src={`http://localhost:3030${car.images[0]}`} alt={car.model} className="card-img-top" />
+                    <img src={`https://carrentbackend-1-tpmm.onrender.com/${car.images[0]}`} alt={car.model} className="card-img-top" />
                   )}
                   <div className="card-body">
                     <h5>{car.brand} {car.model}</h5>

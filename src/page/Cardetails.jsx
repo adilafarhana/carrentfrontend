@@ -28,7 +28,7 @@ const CarDetails = () => {
     const fetchCarDetails = async () => {
       try {
         const id = location.state?.id;
-        const response = await axios.post("http://localhost:3030/cardetails", { id }, requestHeader);
+        const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com//cardetails", { id }, requestHeader);
         setCar(response.data);
       } catch (error) {
         console.error("Error fetching car details:", error);
@@ -96,7 +96,7 @@ const CarDetails = () => {
       console.log("Payment Data:", paymentData); // Debugging
   
       const response = await axios.post(
-        "http://localhost:3030/savePayment",
+        "https://carrentbackend-1-tpmm.onrender.com//savePayment",
         paymentData,
         requestHeader
       );
@@ -145,7 +145,7 @@ const CarDetails = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:3030/postbooking", formData, {
+      const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com//postbooking", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -176,7 +176,7 @@ const CarDetails = () => {
 
       <div className="card mx-auto text-center shadow p-3" style={{ maxWidth: "800px", border: "2px solid #ccc" }}>
         {car.images?.length > 0 && (
-          <img src={`http://localhost:3030${car.images[0]}`} alt={car.model} className="card-img-top" style={{ maxHeight: "400px", objectFit: "cover" }} />
+          <img src={`https://carrentbackend-1-tpmm.onrender.com/${car.images[0]}`} alt={car.model} className="card-img-top" style={{ maxHeight: "400px", objectFit: "cover" }} />
         )}
         <div className="card-body">
           

@@ -16,7 +16,7 @@ const ViewReview = () => {
         const fetchReviews = async () => {
             try {
                 const response = await axios.post(
-                    "http://localhost:3030/viewReviews",
+                    "https://carrentbackend-1-tpmm.onrender.com//viewReviews",
                     { carId }, // Send carId in request body
                     requestHeader
                 );

@@ -21,7 +21,7 @@ const AdminCarUpload = () => {
 
   const fetchCars = async () => {
     try {
-      const response = await axios.get("http://localhost:3030/getcars", requestHeader);
+      const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//getcars", requestHeader);
       setCars(response.data);
     } catch (error) {
       console.error("Error fetching cars:", error);
@@ -66,7 +66,7 @@ const AdminCarUpload = () => {
     });
 
     try {
-      const response = await axios.post("http://localhost:3030/uploadcar", formDataToSend, requestHeader);
+      const response = await axios.post("https://carrentbackend-1-tpmm.onrender.com//uploadcar", formDataToSend, requestHeader);
       alert(response?.data?.message || "Car uploaded successfully!");
       fetchCars();
     } catch (error) {
@@ -77,7 +77,7 @@ const AdminCarUpload = () => {
 
   const handleDelete = async (carId) => {
     try {
-      await axios.delete(`http://localhost:3030/deletecar/${carId}`, requestHeader);
+      await axios.delete(`https://carrentbackend-1-tpmm.onrender.com//deletecar/${carId}`, requestHeader);
       alert("Car deleted successfully!");
       fetchCars();
     } catch (error) {

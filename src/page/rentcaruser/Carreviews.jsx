@@ -12,7 +12,7 @@ const CarReviews = ({ carId }) => {
   // Fetch existing reviews from the backend
   useEffect(() => {
     axios
-      .get(`http://localhost:3030/reviews/${carId}`, requestHeader)
+      .get(`https://carrentbackend-1-tpmm.onrender.com//reviews/${carId}`, requestHeader)
       .then(response => setReviews(response.data))
       .catch(error => console.error("Error fetching reviews:", error));
   }, [carId]);
@@ -29,7 +29,7 @@ const CarReviews = ({ carId }) => {
     if (newReview.name && newReview.comment) {
       try {
         const response = await axios.post(
-          "http://localhost:3030/addreview",
+          "https://carrentbackend-1-tpmm.onrender.com//addreview",
           {
             carId,
             username: newReview.name,

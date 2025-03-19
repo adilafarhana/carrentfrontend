@@ -8,7 +8,7 @@ const Viewrentblogs = () => {
     // Fetch the blog data when the component is mounted
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("http://localhost:3030/getblogs");
+        const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//getblogs");
         console.log(response.data); // Check if the data is being fetched
         setBlogs(response.data);
       } catch (error) {
@@ -29,7 +29,7 @@ const Viewrentblogs = () => {
               <div className="card">
                 {blog.image && (
                   <img
-                    src={`http://localhost:3030/${blog.image}`} // Ensure the image path is correct
+                    src={`https://carrentbackend-1-tpmm.onrender.com//${blog.image}`} // Ensure the image path is correct
                     alt={blog.title}
                     className="card-img-top"
                   />

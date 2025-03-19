@@ -7,7 +7,7 @@ const Notification = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get("http://localhost:3030/getnotication", {
+        const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//getnotication", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         setNotifications(response.data);

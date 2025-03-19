@@ -16,7 +16,7 @@ const AdminFAQ = () => {
   useEffect(() => {
     const fetchFAQs = async () => {
       try {
-        const response = await axios.get("http://localhost:3030/faqs", requestHeader);
+        const response = await axios.get("https://carrentbackend-1-tpmm.onrender.com//faqs", requestHeader);
         setFaqs(response.data);
       } catch (error) {
         console.error("Error fetching FAQs:", error);
@@ -31,10 +31,10 @@ const AdminFAQ = () => {
     e.preventDefault();
     try {
       if (editMode) {
-        await axios.put(`http://localhost:3030/editFAQ/${currentFAQId}`, newFAQ, requestHeader);
+        await axios.put(`https://carrentbackend-1-tpmm.onrender.com//editFAQ/${currentFAQId}`, newFAQ, requestHeader);
         alert("FAQ updated successfully!");
       } else {
-        await axios.post("http://localhost:3030/postfaqs", newFAQ, requestHeader);
+        await axios.post("https://carrentbackend-1-tpmm.onrender.com//postfaqs", newFAQ, requestHeader);
         alert("FAQ added successfully!");
       }
       setNewFAQ({ question: "", answer: "", category: "General" });
@@ -55,7 +55,7 @@ const AdminFAQ = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this FAQ?")) return;
     try {
-      await axios.delete(`http://localhost:3030/deleteFAQ/${id}`, requestHeader);
+      await axios.delete(`https://carrentbackend-1-tpmm.onrender.com//deleteFAQ/${id}`, requestHeader);
       alert("FAQ deleted successfully!");
       setFaqs(faqs.filter((faq) => faq._id !== id));
     } catch (error) {

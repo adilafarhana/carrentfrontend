@@ -10,7 +10,7 @@ const FAQSection = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3030/faqs", requestHeader)
+      .get("https://carrentbackend-1-tpmm.onrender.com//faqs", requestHeader)
       .then((response) => {
         console.log("Fetched FAQs:", response.data); // Debugging
         setFaqs(response.data);

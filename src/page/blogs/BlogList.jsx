@@ -7,7 +7,7 @@ const BlogList = () => {
   const [Blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3030/Blogs")  
+    fetch("https://carrentbackend-1-tpmm.onrender.com//Blogs")  
       .then((response) => response.json())
       .then((data) => setBlogs(data))
       .catch((error) => console.error("Error fetching blog details:", error));
@@ -21,7 +21,7 @@ const BlogList = () => {
         {images && images.length > 0 && (
           <div className="image-gallery">
             {images.map((image, index) => (
-              <img key={index} src={`http://localhost:3030${image}`} alt={`Blog image ${index}`} className="img-fluid" />
+              <img key={index} src={`https://carrentbackend-1-tpmm.onrender.com/${image}`} alt={`Blog image ${index}`} className="img-fluid" />
             ))}
           </div>
         )}
@@ -36,7 +36,7 @@ const BlogList = () => {
                 <div className="card" >
                   {/* Displaying the first image of each blog */}
                   {Blog?.images?.length > 0 && (
-                    <img src={`http://localhost:3030${Blog.images[0]}`} alt={Blog.title} className="card-img-top img-fluid" />
+                    <img src={`https://carrentbackend-1-tpmm.onrender.com/${Blog.images[0]}`} alt={Blog.title} className="card-img-top img-fluid" />
                   )}
 
                   <div className="card-body">

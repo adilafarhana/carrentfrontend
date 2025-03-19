@@ -11,7 +11,7 @@ const Paymentdetails = () => {
     useEffect(() => {
         const fetchBookingDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:3030/bookingDetails/${bookingId}`, {
+                const response = await axios.get(`https://carrentbackend-1-tpmm.onrender.com//bookingDetails/${bookingId}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
                 });
                 setBooking(response.data);

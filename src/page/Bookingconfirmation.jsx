@@ -18,7 +18,7 @@ const BookingConfirmation = () => {
       try {
         setLoading(true);
         const response = await axios.post(
-          "http://localhost:3030/Bookingdetails",
+          "https://carrentbackend-1-tpmm.onrender.com//Bookingdetails",
           { id },
           requestHeader
         );
@@ -66,7 +66,7 @@ const BookingConfirmation = () => {
       
       <div className="card mx-auto text-center shadow p-3" style={{ maxWidth: "500px" }}>
         {car?.images?.length > 0 && (
-          <img src={`http://localhost:3030${car.images[0]}`} alt={car.model} className="card-img-top" />
+          <img src={`https://carrentbackend-1-tpmm.onrender.com/${car.images[0]}`} alt={car.model} className="card-img-top" />
         )}
         <div className="card-body">
           <p><strong>Brand:</strong> {car?.brand}</p>

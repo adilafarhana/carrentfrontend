@@ -9,7 +9,7 @@ const Maindashboard = () => {
   const [Blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3030/Blogs")
+    fetch("https://carrentbackend-1-tpmm.onrender.com//Blogs")
       .then((response) => response.json())
       .then((data) => setBlogs(data))
       .catch((error) => console.error("Error fetching blog details:", error));
@@ -78,7 +78,7 @@ const Maindashboard = () => {
               <div key={Blog._id} className="col-md-4 mb-4">
                 <div className="card">
                   {Blog?.images?.length > 0 && (
-                    <img src={`http://localhost:3030${Blog.images[0]}`} alt={Blog.title} className="card-img-top img-fluid" />
+                    <img src={`https://carrentbackend-1-tpmm.onrender.com/${Blog.images[0]}`} alt={Blog.title} className="card-img-top img-fluid" />
                   )}
                   <div className="card-body">
                     <h5>{Blog.title}</h5>
