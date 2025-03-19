@@ -21,7 +21,7 @@ const BlogList = () => {
         {images && images.length > 0 && (
           <div className="image-gallery">
             {images.map((image, index) => (
-              <img key={index} src={`https://carrentbackend-1-tpmm.onrender.com/${image}`} alt={`Blog image ${index}`} className="img-fluid" />
+              <img key={index} src={`https://carrentbackend-1-tpmm.onrender.com${image}`} alt={`Blog image ${index}`} className="img-fluid" />
             ))}
           </div>
         )}
@@ -36,7 +36,7 @@ const BlogList = () => {
                 <div className="card" >
                   {/* Displaying the first image of each blog */}
                   {Blog?.images?.length > 0 && (
-                    <img src={`https://carrentbackend-1-tpmm.onrender.com/${Blog.images[0]}`} alt={Blog.title} className="card-img-top img-fluid" />
+                    <img src={`https://carrentbackend-1-tpmm.onrender.com${Blog.images[0]}`} alt={Blog.title} className="card-img-top img-fluid" />
                   )}
 
                   <div className="card-body">

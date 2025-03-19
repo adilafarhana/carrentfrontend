@@ -108,7 +108,7 @@ const Adminbookingdetails = () => {
                       {booking.images.map((image, idx) => (
                         <img
                           key={idx}
-                          src={`https://carrentbackend-1-tpmm.onrender.com/${image}`}
+                          src={`https://carrentbackend-1-tpmm.onrender.com${image}`}
                           alt={`Booking Image ${idx + 1}`}
                           style={styles.image}
                         />

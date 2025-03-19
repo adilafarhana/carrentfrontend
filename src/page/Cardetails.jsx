@@ -176,7 +176,7 @@ const CarDetails = () => {
 
       <div className="card mx-auto text-center shadow p-3" style={{ maxWidth: "800px", border: "2px solid #ccc" }}>
         {car.images?.length > 0 && (
-          <img src={`https://carrentbackend-1-tpmm.onrender.com/${car.images[0]}`} alt={car.model} className="card-img-top" style={{ maxHeight: "400px", objectFit: "cover" }} />
+          <img src={`https://carrentbackend-1-tpmm.onrender.co${car.images[0]}`} alt={car.model} className="card-img-top" style={{ maxHeight: "400px", objectFit: "cover" }} />
         )}
         <div className="card-body">
           
