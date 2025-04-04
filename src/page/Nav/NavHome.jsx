@@ -22,14 +22,20 @@ const NavHome = () => {
      
       {/* Navigation Links */}
       <ul style={styles.navLinks}>
+      <li style={styles.navItem}>
+         <b><Link to="/signin" style={styles.navLink}>
+            back
+          </Link></b> 
+       
+        </li>
         <li style={styles.navItem}>
           <Link to="/rendcardashboard" style={styles.navLink}>
-            Used Car
+            Rent Car
           </Link>
         </li>
         <li style={styles.navItem}>
           <Link to="/usedcardashboard" style={styles.navLink}>
-            Rent Car
+          Used Car
           </Link>
         </li>
         <li style={styles.navItem}>

@@ -78,7 +78,7 @@ const Maindashboard = () => {
               <div key={Blog._id} className="col-md-4 mb-4">
                 <div className="card">
                   {Blog?.images?.length > 0 && (
-                    <img src={`https://carrentbackend-1-tpmm.onrender.com/${Blog.images[0]}`} alt={Blog.title} className="card-img-top img-fluid" />
+                    <img src={`https://carrentbackend-1-tpmm.onrender.com${Blog.images[0]}`} alt={Blog.title} className="card-img-top img-fluid" />
                   )}
                   <div className="card-body">
                     <h5>{Blog.title}</h5>

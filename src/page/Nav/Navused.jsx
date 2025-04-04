@@ -1,12 +1,156 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
-import { FaMapMarkerAlt } from "react-icons/fa"; // Import location icon
-import  { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import styled from "styled-components";
+
+const NavbarContainer = styled.nav`
+  background-color: #333;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 1rem;
+  }
+`;
+
+const BrandContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+`;
+
+const Logo = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  border-radius: 50%;
+`;
+
+const BrandName = styled.h2`
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+`;
+
+const NavLinks = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+`;
+
+const NavItem = styled.li`
+  margin: 0 0.5rem;
+
+  @media (max-width: 768px) {
+    margin: 0.5rem 0;
+    width: 100%;
+    text-align: center;
+  }
+`;
+
+const NavLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+
+  &:hover {
+    background-color: #575757;
+  }
+
+  @media (max-width: 768px) {
+    display: block;
+    width: 100%;
+  }
+`;
+
+const LogoutButton = styled.span`
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
+
+  &:hover {
+    background-color: #575757;
+  }
+
+  @media (max-width: 768px) {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+`;
+
+const RightContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+const LocationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 0.875rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem;
+  border-radius: 5px;
+  max-width: 250px;
+  word-wrap: break-word;
+  margin-right: 1rem;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+`;
+
+const LocationIcon = styled(FaMapMarkerAlt)`
+  margin-right: 0.5rem;
+  color: red;
+  font-size: 1rem;
+  flex-shrink: 0;
+`;
 
 const Navused = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [location, setLocation] = useState("Fetching location...");
- 
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -22,174 +166,58 @@ const Navused = () => {
         () => setLocation("Permission denied for location access")
       );
     } else {
-      setLocation("Geolocation is not supported by this browser");
+      setLocation("Geolocation not supported");
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove token
-    navigate("/"); // Redirect to home page
-  };
-
-  const navbarStyle = {
-    backgroundColor: "#333",
-    padding: "100",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-
-  };
-
-  const ulStyle = {
-    listStyleType: "none",
-    margin: 0,
-    padding: 0,
-    display: "flex",
-    alignItems: "center",
-  };
-
-  const liStyle = {
-    margin: "0 15px",
-  };
-
-  const linkStyle = {
-    color: "white",
-    textDecoration: "none",
-    fontSize: "18px",
-    padding: "10px 15px",
-    borderRadius: "5px",
-    transition: "background-color 0.3s ease",
-    cursor: "pointer",
-  };
-
-  const logoStyle = {
-    width: "40px",
-    height: "auto",
-    marginRight: "20px",
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
-    <nav style={navbarStyle}>
-      {/* Logo */}
-      <img
-        src="https://static.vecteezy.com/system/resources/previews/000/623/239/original/auto-car-logo-template-vector-icon.jpg"
-        alt="Car Logo"
-        style={logoStyle}
-        width={100}
-        height={100}
-      />
-      <h2 style={styles.brandName}>Car Marketplace</h2>
+    <NavbarContainer>
+      <BrandContainer>
+        <Logo
+          src="https://static.vecteezy.com/system/resources/previews/000/623/239/original/auto-car-logo-template-vector-icon.jpg"
+          alt="Car Logo"
+        />
+        <BrandName>Car Marketplace</BrandName>
+      </BrandContainer>
 
-      {/* Nav Links */}
-      <ul style={ulStyle}>
+      <NavLinks>
+      <NavItem>
+          <NavLink to="/maindashboard">Home</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/FAQSection">View FAQ</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/Complaint">Complaint</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/userdetails">User Details</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/bloglist">Blog List</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/Orderstatus">My Booking</NavLink>
+        </NavItem>
+      </NavLinks>
 
+      <RightContainer>
+        <LocationContainer>
+          <LocationIcon />
+          <span>{location}</span>
+        </LocationContainer>
 
-        <li style={liStyle}>
-          <Link
-            to="/FAQSection"
-            style={linkStyle}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-          >
-            View FAQ
-          </Link>
-        </li>
-        <li style={liStyle}>
-          <Link
-            to="/Complaint"
-            style={linkStyle}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-          >
-            Complaint          </Link>
-        </li>
-       
-        <li style={liStyle}>
-          <Link
-            to="/userdetails"
-            style={linkStyle}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-          >
-            userdetails
-          </Link>
-        </li>
-      </ul>  <Link
-        to="/bloglist"
-        style={linkStyle}
-        onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-        onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-      >
-        bloglist          </Link>
-
-      <Link
-        to="/Orderstatus"
-        style={linkStyle}
-        onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-        onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-      >
-        My booking
-      </Link>
-
-      {/* Logout Button */}
-      {localStorage.getItem("token") && (
-        <ul style={{ ...ulStyle, marginLeft: "auto" }}>
-          <li style={liStyle}>
-            <span
-              style={linkStyle}
-              onClick={handleLogout}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#575757")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "transparent")}
-            >
-              Logout
-            </span>
-          </li>
-        </ul>
-
-      )}
-       {/* Location & Logout */}
-            <div style={styles.rightContainer}>
-              <div style={styles.locationContainer}>
-                <FaMapMarkerAlt style={styles.locationIcon} />
-                <span style={styles.locationText}>{location}</span>
-              </div>
-             
-            </div>
-    </nav>
+        {localStorage.getItem("token") && (
+          <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+        )}
+      </RightContainer>
+    </NavbarContainer>
   );
 };
-const styles = {
 
-
-
-  brandName: {
-    color: "white",
-    fontSize: "22px",
-    fontWeight: "bold",
-  },
-  locationContainer: {
-    display: "flex",
-    alignItems: "center",
-    color: "white",
-    fontSize: "14px",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    padding: "8px",
-    borderRadius: "5px",
-    maxWidth: "300px", // Adjust width to allow longer text
-    wordWrap: "break-word", // Ensures text wraps properly
-  },
-  locationIcon: {
-    marginRight: "5px",
-    color: "red",
-    fontSize: "16px",
-  },
-  locationText: {
-    whiteSpace: "normal", // Allows multi-line text
-    wordBreak: "break-word", // Ensures long words wrap
-  },
-
-
-
-
-};
 export default Navused;

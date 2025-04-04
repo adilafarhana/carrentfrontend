@@ -40,15 +40,18 @@ const CarDetails = () => {
     fetchCarDetails();
   }, []);
 
-  // Calculate total price and advance payment based on duration
   const duration = watch("duration");
-  useEffect(() => {
-    if (duration && car?.type === "Rent") {
-      const price = periodPrice * duration;
-      setTotalPrice(price);
-      setAdvancePaymentAmount(price * 0.2); // 20% advance payment
-    }
-  }, [duration, car, periodPrice]);
+ // Update the useEffect that calculates total price and advance payment:
+// Update the useEffect that calculates total price and advance payment:
+// Update the useEffect that calculates total price and advance payment:
+useEffect(() => {
+  if (duration && car?.type === "Rent") {
+    const price = periodPrice * duration; 
+    setTotalPrice(price);
+    setAdvancePaymentAmount(price * 0.5); // 50% advance payment
+  }
+}, [duration, car, periodPrice]);
+  
 
   // Set the price based on the selected rental period
   useEffect(() => {
@@ -134,10 +137,10 @@ const CarDetails = () => {
       date: data.date,
       time: data.time,
       ...(car.type === "Rent" && { duration: data.duration }), // Include duration only for rental cars
-      totalPrice: totalPriceValue, // Include totalPrice for both rental and used cars
-      ...(car.type === "Rent" && { advancePayment: advancePaymentAmount }), // Include advancePayment only for rental cars
-      paymentMethod: paymentMethodValue, // Use the correct payment method
-      rentalPeriod: selectedPeriod,
+      totalPrice: totalPriceValue,
+      advancePayment: car.type === "Rent" ? advancePaymentAmount : 0,
+      paymentMethod: paymentMethodValue,
+      rentalPeriod: car.type === "Rent" ? selectedPeriod : null,
     }));
   
     for (let i = 0; i < images.length; i++) {
@@ -176,7 +179,7 @@ const CarDetails = () => {
 
       <div className="card mx-auto text-center shadow p-3" style={{ maxWidth: "800px", border: "2px solid #ccc" }}>
         {car.images?.length > 0 && (
-          <img src={`https://carrentbackend-1-tpmm.onrender.co${car.images[0]}`} alt={car.model} className="card-img-top" style={{ maxHeight: "400px", objectFit: "cover" }} />
+          <img src={`https://carrentbackend-1-tpmm.onrender.com${car.images[0]}`} alt={car.model} className="card-img-top" style={{ maxHeight: "400px", objectFit: "cover" }} />
         )}
         <div className="card-body">
           
@@ -298,7 +301,7 @@ const CarDetails = () => {
                   </div>
 
                   <div className="mb-2">
-                    <label>Advance Payment (20%):</label>
+                    <label>Advance Payment (50%):</label>
                     <input
                       type="text"
                       className="form-control"

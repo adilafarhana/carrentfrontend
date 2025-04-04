@@ -39,6 +39,13 @@ import Usercomplaint from './page/Usercomplaint'
 import Aboutas from './page/Aboutas'
 import Contact from './page/Contact'
 import UploadCars from './page/Uploadcars'
+import CarBookingDetailsPage from './page/CarBookingDetailsPage'
+import UploadedCars from './page/UploadedCars'
+import UserRentalStatus from './page/UserRentalStatus'
+import ReturnCar from './page/ReternCar'
+import UserReturnDetails from './page/UserReturnDetails'
+import CarBookingHistory from './page/CarBookingHistory'
+import BookingDetailsView from './page/BookingDeatilsView'
 
 
 
@@ -90,6 +97,13 @@ function App() {
           <Route path="/Aboutas" element={<Aboutas/>} />
           <Route path="/Contact" element={<Contact/>} />
           <Route path="/UploadCars" element={<UploadCars/>} />
+          <Route path="/CarBookingDetailsPage" element={<CarBookingDetailsPage/>} />
+          <Route path="/admin/uploaded-cars" element={<UploadedCars/>} />
+          <Route path="/UserRentalStatus" element={<UserRentalStatus/>} />
+          <Route path="/ReturnCar" element={<ReturnCar/>} />
+          <Route path="/returns/:id" element={<UserReturnDetails/>} />
+          <Route path="/car-booking-history/:carId" element={<CarBookingHistory/>} />
+          <Route path="/admin/booking-details/:id" element={<BookingDetailsView/>} />
 
           {/* <Route path="/blogdetails" element={<Blgdetails />} /> */}
           {/* <Route path="/viewrentblog" element={<Viewrentblog />} /> */}

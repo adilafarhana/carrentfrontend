@@ -1,102 +1,112 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navused from "../Nav/Navused";
+import Navrent from "../Nav/Navrent";
 
 const Rendcardashboard = () => {
-  const location = useLocation();
+  const [rentCars, setRentCars] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { brand, model, price, description, type, images } = location.state || {};
 
-  const [cars, setCars] = useState([]);
+  const requestHeader = {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  };
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const [carsResponse, bookingsResponse] = await Promise.all([
+        axios.get("https://carrentbackend-1-tpmm.onrender.com/getcars", requestHeader),
+        axios.post("https://carrentbackend-1-tpmm.onrender.com/getbooking", {}, requestHeader)
+      ]);
+      
+      const rentalCars = carsResponse.data.filter((car) => car.type === "Rent");
+      setBookings(bookingsResponse.data);
+      updateCarStatusesAutomatically(rentalCars, bookingsResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateCarStatusesAutomatically = (carsData, bookingsData) => {
+    const updatedCars = carsData.map(car => {
+      // Check for active bookings (excluding Returned and Cancelled statuses)
+      const activeBookings = bookingsData.filter(booking => 
+        booking.car?._id === car._id && 
+        !["Returned", "Cancelled"].includes(booking.status));
+      
+      // Determine new status
+      const newStatus = activeBookings.length > 0 ? "Not Available" : "Available";
+      
+      // Only update if status has changed
+      if (car.status !== newStatus) {
+        // Update the backend immediately
+        axios.put(
+          `https://carrentbackend-1-tpmm.onrender.com/updatestatus/${car._id}`,
+          { status: newStatus },
+          requestHeader
+        ).catch(err => console.error("Error updating car status:", err));
+        
+        return { ...car, status: newStatus };
+      }
+      return car;
+    });
+  
+    setRentCars(updatedCars);
+  };
 
   useEffect(() => {
-    axios.post("https://carrentbackend-1-tpmm.onrender.com/cars", { type: "Used" })
-      .then((response) => {
-        setCars(response.data);
-
-        // Fetch notifications and alert the user
-        axios.get("https://carrentbackend-1-tpmm.onrender.com/getnotication", requestHeader).then((notificationResponse) => {
-          if (notificationResponse?.data) {
-            alert(notificationResponse.data.map(notification => notification.message).join('\n'));
-          }
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching car details:", error);
-      });
+    fetchData();
+    // Refresh data every 30 seconds to keep status updated
+    const interval = setInterval(fetchData, 30000);
+    return () => clearInterval(interval);
   }, []);
-  
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      <Navused />
+      <Navrent />
+
       <header className="bg-primary text-white text-center py-5">
-        <h1>Welcome to Our Used car Platform</h1>
-        <p>Your one-stop shop for hassle-free used car rentals, sales, and more!</p>
+        <h1>Welcome to Our Rent car Platform</h1>
+        <p>Find the best rental deals tailored to your needs!</p>
       </header>
 
       {/* Image Carousel */}
       <div id="carouselExampleIndicators" className="carousel slide">
         <div className="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="0"
-            className="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img
-              src="https://www.progressivetourtravels.com/images/car-banner.jpg"
-              className="d-block w-100"
-              alt="..."
-            />
+            <img src="https://cdn.wallpapersafari.com/11/41/0Xo4mS.jpg" className="d-block w-100" alt="Slide 1" />
           </div>
           <div className="carousel-item">
-            <img
-              src="https://www.progressivetourtravels.com/images/car-banner.jpg"
-              className="d-block w-100"
-              alt="..."
-            />
+            <img src="https://cdn.wallpapersafari.com/11/41/0Xo4mS.jpg" className="d-block w-100" alt="Slide 2" />
           </div>
           <div className="carousel-item">
-            <img
-              src="https://www.progressivetourtravels.com/images/car-banner.jpg "
-              className="d-block w-100"
-              alt="..."
-            />
+            <img src="https://cdn.wallpapersafari.com/11/41/0Xo4mS.jpg" className="d-block w-100" alt="Slide 3" />
           </div>
         </div>
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="prev"
-        >
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Previous</span>
         </button>
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="next"
-        >
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
@@ -125,97 +135,110 @@ const Rendcardashboard = () => {
       </div>
       {/* Car Listings Section */}
       <section id="carListings" className="container mt-5">
-        <h2 className="text-center mb-4">Cars</h2>
+        <h2 className="text-center mb-4">Available Rental Cars</h2>
         <div className="row">
-          {cars.length > 0 ? (
-            cars.map((car) => (
+          {rentCars.length > 0 ? (
+            rentCars.map((car) => (
               <div key={car._id} className="col-md-4 mb-4">
-                <div className="card">
-                  {car.images.length > 0 && (
-                    <img src={`https://carrentbackend-1-tpmm.onrender.com/${car.images[0]}`} alt={car.model} className="card-img-top" />
+                <div className="card h-100">
+                  {car.images?.length > 0 && (
+                    <div style={{ height: "200px", overflow: "hidden" }}>
+                      <img 
+                        src={`https://carrentbackend-1-tpmm.onrender.com${car.images[0]}`} 
+                        alt={car.model} 
+                        className="card-img-top h-100 w-100 object-fit-cover"
+                        style={car.status !== "Available" ? { opacity: 0.5 } : {}}
+                      />
+                    </div>
                   )}
-                  <div className="card-body">
-                    <h5>{car.brand} {car.model}</h5>
-                    <p><del style={{ color: 'red', fontSize: '1.1em' }}>MRP: ₹{(car.price / (1 - car.discountPercentage / 100)).toFixed(2)}</del></p>
-                    <p style={{ color: 'green', fontSize: '1.1em' }}>
-                      <strong>Discounted Price: ₹{car.price}</strong> ({car.discountPercentage}% OFF)
+                  <div className="card-body d-flex flex-column">
+                    <h5 className="card-title">{car.brand} {car.model}</h5>
+                    <p className="card-text">
+                      <strong>Rental Price:</strong> {car.rentalPricePerHour} USD/hour
                     </p>
-                    {car.specialOffers && <p className="offer" style={{ fontSize: '1.2em', color: '#ff4500' }}>🔥 {car.specialOffers}</p>}
-                    <p><strong>Price:</strong> ₹{car.price}</p>
-                    <p><strong>Status:</strong> {car.status}</p>
-
-                    <button onClick={() => navigate(`/car-details/${car?._id}`, { state: { id: car?._id } })} className="btn btn-secondary">
-                      Booking Now
-                    </button>
-                    <br /><br />
-                    {car.status === "Available" ? (
-                      <button className="btn btn-primary">
-                        <Link to={`/car-reviews/${car._id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                          View Review
-                        </Link>
-                      </button>
-                    ) : (
-                      <button disabled className="btn btn-secondary" style={{ cursor: "not-allowed" }}>
-                        Not Available
-                      </button>
-                    )}
+                    <p className="card-text">
+                      <strong>Status:</strong> 
+                      <span 
+                        className={`badge ${car.status === "Available" ? "bg-success" : "bg-danger"}`}
+                        style={{ marginLeft: "8px" }}
+                      >
+                        {car.status}
+                      </span>
+                      {car.status === "Not Available" && (
+                        <div className="text-muted small mt-1">(Currently booked)</div>
+                      )}
+                    </p>
+                    <div className="mt-auto">
+                      {car.status === "Available" ? (
+                        <>
+                          <button 
+                            onClick={() => navigate(`/car-details/${car._id}`, { state: { id: car._id }})}
+                            className="btn btn-primary w-100 mb-2"
+                          >
+                            Book Now
+                          </button>
+                          <Link 
+                            to={`/car-reviews/${car._id}`} 
+                            className="btn btn-outline-secondary w-100"
+                          >
+                            View Reviews
+                          </Link>
+                        </>
+                      ) : (
+                        <div className="alert alert-warning text-center mb-0">
+                          Currently unavailable for booking
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <p>No cars available.</p>
+            <div className="col-12">
+              <div className="alert alert-info text-center">
+                No rental cars available at the moment. Please check back later.
+              </div>
+            </div>
           )}
         </div>
-        <footer
-        style={{
-          backgroundColor: "#000000", // Black background
-          color: "#ffffff", // White text
-          padding: "40px 20px",
-          marginTop: "40px",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            gap: "20px",
-          }}
-        >
-          <div style={{ flex: "1", minWidth: "200px" }}>
-            <h4 style={{ marginBottom: "15px" }}>About Us</h4>
-            <p>We are the leading online vehicle marketplace offering car sales, rentals, and best-in-class customer support.</p>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-dark text-white py-4 mt-5">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3 mb-3">
+              <h5>About Us</h5>
+              <p>We are the leading online vehicle marketplace offering car rentals and best-in-class customer support.</p>
+            </div>
+            <div className="col-md-3 mb-3">
+              <h5>Contact</h5>
+              <p>Email: support@car-rental.com</p>
+              <p>Phone: +91 98765 43210</p>
+              <p>Location: Ernakulam, India</p>
+            </div>
+            <div className="col-md-3 mb-3">
+              <h5>Quick Links</h5>
+              <ul className="list-unstyled">
+                <li><Link to="/" className="text-white">Home</Link></li>
+                <li><Link to="/rent" className="text-white">Rent a Car</Link></li>
+                <li><Link to="/used" className="text-white">Used Cars</Link></li>
+              </ul>
+            </div>
+            <div className="col-md-3 mb-3">
+              <h5>Legal</h5>
+              <ul className="list-unstyled">
+                <li><Link to="/terms" className="text-white">Terms of Service</Link></li>
+                <li><Link to="/privacy" className="text-white">Privacy Policy</Link></li>
+              </ul>
+            </div>
           </div>
-          <div style={{ flex: "1", minWidth: "200px" }}>
-            <h4 style={{ marginBottom: "15px" }}>Contact</h4>
-            <p>Email: support@car-marketplace.com</p>
-            <p>Phone: +91 98765 43210</p>
-            <p>Location: Ernakulam, India</p>
+          <div className="text-center pt-3 border-top">
+            &copy; {new Date().getFullYear()} Car Rental Platform. All rights reserved.
           </div>
-          <div style={{ flex: "1", minWidth: "200px" }}>
-            <h4 style={{ marginBottom: "15px" }}>Rent a Car</h4>
-            <p>Choose from a wide range of cars for rent, from economy to luxury.</p>
-          </div>
-          <div style={{ flex: "1", minWidth: "200px" }}>
-            <h4 style={{ marginBottom: "15px" }}>Used Cars</h4>
-            <p>Browse our collection of quality pre-owned cars at unbeatable prices.</p>
-          </div>
-        </div>
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: "20px",
-            paddingTop: "20px",
-            borderTop: "1px solid #444",
-          }}
-        >
-          &copy; 2025 Car Marketplace | All rights reserved.
         </div>
       </footer>
-      </section>
     </>
   );
 };

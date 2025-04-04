@@ -15,7 +15,6 @@ const AboutUs = () => {
         padding: "50px 10%",
       }}
     >
-      {/* About Us Content */}
       <div
         style={{
           width: "100%",
